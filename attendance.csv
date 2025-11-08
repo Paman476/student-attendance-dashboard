@@ -1,0 +1,11 @@
+Student_ID,Name,Subject,Date,Attendance,Marks
+1,Ali,Math,2025-01-03,Present,85
+2,Sara,Science,2025-01-03,Absent,62
+3,Ahmed,English,2025-01-04,Present,78
+4,Fatima,Math,2025-01-04,Absent,55
+5,Hassan,Science,2025-01-05,Present,88
+6,Amna,English,2025-01-05,Absent,60
+7,Usman,Math,2025-01-06,Present,92
+8,Zara,Science,2025-01-06,Absent,57
+9,Ali,English,2025-01-07,Present,80
+10,Sara,Math,2025-01-07,Absent,63
