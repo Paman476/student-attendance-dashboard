@@ -1,12 +1,12 @@
 Date,Name,Subject,Attendance,Marks
-1/1/2025,Ali,IT Infrastructure,Present,90
-1/2/2025,Ali,IT Infrastructure,Present,92
-1/3/2025,Ali,IT Infrastructure,Present,88
-1/4/2025,Ali,IT Infrastructure,Present,95
-1/5/2025,Ali,IT Infrastructure,Present,89
-1/6/2025,Ali,IT Infrastructure,Present,93
-1/7/2025,Ali,IT Infrastructure,Present,91
-1/8/2025,Ali,IT Infrastructure,Present,94
+1/1/2025,Ali,IT Infrastructure,Absent,90
+1/2/2025,Ali,IT Infrastructure,Absent,92
+1/3/2025,Ali,IT Infrastructure,Absent,88
+1/4/2025,Ali,IT Infrastructure,Absent,95
+1/5/2025,Ali,IT Infrastructure,Absent,89
+1/6/2025,Ali,IT Infrastructure,Absent,93
+1/7/2025,Ali,IT Infrastructure,Absent,91
+1/8/2025,Ali,IT Infrastructure,Absent,94
 1/9/2025,Ali,IT Infrastructure,Present,90
 1/10/2025,Ali,IT Infrastructure,Present,92
 1/11/2025,Ali,IT Infrastructure,Present,88
@@ -399,6 +399,7 @@ Date,Name,Subject,Attendance,Marks
 1/14/2025,Hassan,Web Technologies,Absent,63
 1/15/2025,Hassan,Web Technologies,Absent,68
 1/16/2025,Hassan,Web Technologies,Absent,62 
+
 
 
 
