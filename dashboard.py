@@ -138,28 +138,40 @@ if student_input.strip():
 
             st.markdown("---")
 
-            # ---------------- Overall Attendance Pie Chart ----------------
-            st.subheader("📊 Overall Attendance Percentage")
-            labels = ['Present', 'Absent']
-            sizes = [present_count, absent_count]
-            colors = ['green', 'red']
+            # ---------------- Combined Pie Chart for All Subjects ----------------
+            st.subheader("📊 Overall Attendance Percentage by Subject")
 
-            fig1, ax1 = plt.subplots(figsize=(5,5))
-            ax1.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%',
-                    startangle=90, textprops={'color':'white', 'fontsize':12})
-            ax1.axis('equal')  # Equal aspect ratio ensures pie is circular
-            st.pyplot(fig1)
-
-            st.markdown("---")
-
-            # ---------------- Subject-wise Summary Table ----------------
-            st.subheader("📄 Subject-wise Summary")
             subj_summary = sdata.groupby('Subject').agg(
                 Present=('Attendance_Binary', 'sum'),
                 Total=('Attendance_Binary', 'count')
             )
             subj_summary['Attendance %'] = (subj_summary['Present'] / subj_summary['Total'] * 100).round(2)
-            st.dataframe(subj_summary.sort_values('Attendance %', ascending=False))
+
+            # Agar sirf ek subject hai to wo bhi handle hoga
+            labels = subj_summary.index.tolist()
+            sizes = subj_summary['Attendance %'].tolist()
+
+            # Colors: gradient green → red
+            colors = plt.cm.RdYlGn([p/100 for p in sizes])  # green = high %, red = low %
+
+            fig, ax = plt.subplots(figsize=(6,6))
+            wedges, texts, autotexts = ax.pie(
+                sizes,
+                labels=labels,
+                autopct='%1.1f%%',
+                startangle=90,
+                colors=colors,
+                textprops={'color': 'white', 'fontsize': 11}
+            )
+            ax.axis('equal')
+            st.pyplot(fig)
+
+            st.markdown("---")
+
+            # ---------------- Subject-wise Summary Table ----------------
+            st.subheader("📄 Subject-wise Summary")
+            subj_summary_display = subj_summary[['Present', 'Total', 'Attendance %']]
+            st.dataframe(subj_summary_display.sort_values('Attendance %', ascending=False))
 
             st.markdown("---")
 
