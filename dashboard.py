@@ -5,70 +5,79 @@ import seaborn as sns
 
 # --- Load dataset ---
 data = pd.read_csv('attendance.csv')
-
-# --- Clean column names to avoid KeyError ---
-data.columns = data.columns.str.strip()  # Remove any extra spaces
-
-# --- Clean and prepare data ---
+data.columns = data.columns.str.strip()  # Clean column names
 data['Attendance'] = data['Attendance'].str.strip().str.title()
 data['Attendance_Binary'] = data['Attendance'].map({'Present': 1, 'Absent': 0})
+data['Date'] = pd.to_datetime(data['Date'], dayfirst=True)
 
+# --- Page Config ---
+st.set_page_config(page_title="Student Attendance Dashboard", page_icon="🎓", layout="wide")
+
+# --- Title ---
 st.title("🎓 Student Attendance Dashboard")
-st.write("View individual student attendance percentages and trends.")
+st.markdown("Explore individual student attendance and subject-wise performance with trends and insights.")
 
-# --- Individual Student Attendance Percentage ---
-st.subheader("🧍‍♂️ Individual Student Attendance (%)")
-student_attendance = data.groupby('Name')['Attendance_Binary'].mean() * 100
-student_attendance = student_attendance.round(2)
-student_attendance = student_attendance.sort_values(ascending=False)
+# --- Sidebar: Select Student ---
+st.sidebar.header("Student Selector")
+student_list = data['Name'].unique()
+selected_student = st.sidebar.selectbox("Choose a student:", student_list)
 
-# Show bar chart with student names
-st.bar_chart(student_attendance)
+# --- Metrics for Selected Student ---
+student_data = data[data['Name'] == selected_student]
+total_classes = len(student_data)
+present_count = student_data['Attendance_Binary'].sum()
+absent_count = total_classes - present_count
+attendance_percent = (present_count / total_classes) * 100
+average_marks = student_data['Marks'].mean()
 
-# --- Attendance per Subject ---
+st.subheader(f"🧍‍♂️ {selected_student} - Summary")
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("Total Classes", total_classes)
+col2.metric("Present", present_count)
+col3.metric("Absent", absent_count)
+col4.metric("Attendance %", f"{attendance_percent:.2f}%")
+
+st.metric("Average Marks", f"{average_marks:.2f}")
+
+# --- Attendance Trend Line Chart ---
+st.subheader("📈 Attendance Trend Over Time")
+fig, ax = plt.subplots(figsize=(10, 3))
+sns.lineplot(
+    x='Date', y='Attendance_Binary', data=student_data,
+    marker='o', linewidth=2, color='teal', ax=ax
+)
+ax.set_ylim(-0.1, 1.1)
+ax.set_yticks([0, 1])
+ax.set_yticklabels(["Absent", "Present"])
+ax.set_xlabel("Date")
+ax.set_ylabel("Attendance")
+ax.set_title(f"{selected_student}'s Attendance Trend")
+plt.xticks(rotation=45)
+plt.tight_layout()
+st.pyplot(fig)
+
+# --- Subject-wise Attendance ---
 st.subheader("📘 Subject-wise Attendance (%)")
-subject_attendance = data.groupby('Subject')['Attendance_Binary'].mean() * 100
-st.bar_chart(subject_attendance)
+subject_attendance = student_data.groupby('Subject')['Attendance_Binary'].mean() * 100
+fig2, ax2 = plt.subplots(figsize=(8, 4))
+sns.barplot(x=subject_attendance.index, y=subject_attendance.values, palette="coolwarm", ax=ax2)
+ax2.set_ylim(0, 100)
+ax2.set_ylabel("Attendance %")
+ax2.set_title(f"{selected_student}'s Subject-wise Attendance")
+plt.xticks(rotation=45)
+plt.tight_layout()
+st.pyplot(fig2)
 
-# --- Attendance per Student ---
-st.subheader("🧍‍♂️ Student-wise Attendance (%)")
-student_attendance = data.groupby('Name')['Attendance_Binary'].mean() * 100
-st.bar_chart(student_attendance)
+# --- Detailed Table ---
+st.subheader("📄 Detailed Attendance Records")
+st.dataframe(student_data.sort_values('Date').reset_index(drop=True))
 
-# --- Attendance Summary Table ---
-st.subheader("📄 Attendance Summary (Present / Absent Count)")
-summary = data.groupby(['Name', 'Attendance']).size().unstack(fill_value=0)
-summary['Total'] = summary.sum(axis=1)
-summary['Attendance %'] = (summary.get('Present', 0) / summary['Total']) * 100
-st.dataframe(summary)
-
-# --- Day-wise Attendance Summary ---
-st.subheader("🗓️ Day-wise Attendance Summary")
-day_summary = data.groupby(['Date', 'Attendance']).size().unstack(fill_value=0)
-day_summary['Total'] = day_summary.sum(axis=1)  # Dynamic total per day
-day_summary['Attendance_%'] = (day_summary.get('Present', 0) / day_summary['Total']) * 100
-day_summary['Attendance_%'] = day_summary['Attendance_%'].round(2)
-st.dataframe(day_summary)
-
-# Optional: Line chart for day-wise attendance trend
-st.line_chart(day_summary['Attendance_%'])
-
-# --- Individual Student Search & Trend ---
-st.subheader("🔍 Check Student Details")
-name = st.text_input("Enter student name:")
-if name:
-    name_cap = name.strip().capitalize()
-    if name_cap in data['Name'].unique():
-        student_data = data[data['Name'] == name_cap]
-        total = len(student_data)
-        present = student_data['Attendance_Binary'].sum()
-        percent = (present / total) * 100
-        avg_marks = student_data['Marks'].mean()
-
-        st.success(f"**{name_cap}** - Attendance: {percent:.2f}%, Avg Marks: {avg_marks:.2f}")
-
-        # Attendance trend visualization for selected student
-        st.subheader(f"📈 Attendance Trend for {name_cap}")
-        st.line_chart(student_data.set_index('Date')['Attendance_Binary'])
-    else:
-        st.error("❌ No record found.")
+# --- Download CSV ---
+st.subheader("💾 Download Student Data")
+csv = student_data.to_csv(index=False).encode('utf-8')
+st.download_button(
+    label="Download as CSV",
+    data=csv,
+    file_name=f'{selected_student}_attendance.csv',
+    mime='text/csv'
+)
