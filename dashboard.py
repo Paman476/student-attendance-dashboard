@@ -13,49 +13,17 @@ data.columns = data.columns.str.strip()  # Remove any extra spaces
 data['Attendance'] = data['Attendance'].str.strip().str.title()
 data['Attendance_Binary'] = data['Attendance'].map({'Present': 1, 'Absent': 0})
 
-st.title("🎓 Student Attendance Pattern Dashboard")
-st.write("Analyze attendance trends and student performance using data mining insights.")
-
-# --- Overall Attendance ---
-st.subheader("📊 Overall Attendance Rate")
-overall = data['Attendance'].value_counts(normalize=True) * 100
-st.bar_chart(overall)
-
-# --- Attendance per Subject ---
-st.subheader("📘 Subject-wise Attendance (%)")
-subject_attendance = data.groupby('Subject')['Attendance_Binary'].mean() * 100
-st.bar_chart(subject_attendance)
+st.title("🎓 Student Attendance Dashboard")
+st.write("View individual student attendance percentages and trends.")
 
 # --- Individual Student Attendance Percentage ---
 st.subheader("🧍‍♂️ Individual Student Attendance (%)")
 student_attendance = data.groupby('Name')['Attendance_Binary'].mean() * 100
 student_attendance = student_attendance.round(2)
 student_attendance = student_attendance.sort_values(ascending=False)
+
+# Show bar chart with student names
 st.bar_chart(student_attendance)
-
-# --- Attendance Summary Table ---
-st.subheader("📄 Attendance Summary (Present / Absent Count)")
-summary = data.groupby(['Name', 'Attendance']).size().unstack(fill_value=0)
-summary['Total'] = summary.sum(axis=1)
-summary['Attendance %'] = (summary.get('Present', 0) / summary['Total']) * 100
-st.dataframe(summary)
-
-# --- Day-wise Attendance Summary ---
-st.subheader("🗓️ Day-wise Attendance Summary")
-day_summary = data.groupby(['Date', 'Attendance']).size().unstack(fill_value=0)
-day_summary['Total'] = day_summary.sum(axis=1)  # Dynamic total per day
-day_summary['Attendance_%'] = (day_summary.get('Present', 0) / day_summary['Total']) * 100
-day_summary['Attendance_%'] = day_summary['Attendance_%'].round(2)
-st.dataframe(day_summary)
-
-# Optional: Line chart for day-wise attendance trend
-st.line_chart(day_summary['Attendance_%'])
-
-# --- Correlation ---
-st.subheader("📈 Correlation: Attendance vs Marks")
-fig, ax = plt.subplots()
-sns.heatmap(data[['Attendance_Binary', 'Marks']].corr(), annot=True, cmap='coolwarm', ax=ax)
-st.pyplot(fig)
 
 # --- Individual Student Search & Trend ---
 st.subheader("🔍 Check Student Details")
