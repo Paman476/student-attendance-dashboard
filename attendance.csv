@@ -1,321 +1,81 @@
-Date	Name	Subject	Attendance	Marks
-1/1/2025	Ali	Math	Absent	68
-1/2/2025	Ali	Math	Present	96
-1/3/2025	Ali	Math	Present	100
-1/4/2025	Ali	Math	Present	93
-1/5/2025	Ali	Math	Present	81
-1/6/2025	Ali	Math	Absent	96
-1/7/2025	Ali	Math	Present	59
-1/8/2025	Ali	Math	Absent	61
-1/9/2025	Ali	Math	Present	55
-1/10/2025	Ali	Math	Present	52
-1/11/2025	Ali	Math	Present	86
-1/12/2025	Ali	Math	Present	68
-1/13/2025	Ali	Math	Present	98
-1/14/2025	Ali	Math	Present	67
-1/15/2025	Ali	Math	Present	83
-1/16/2025	Ali	Math	Present	79
-1/1/2025	Ali	Science	Absent	62
-1/2/2025	Ali	Science	Absent	52
-1/3/2025	Ali	Science	Absent	76
-1/4/2025	Ali	Science	Present	98
-1/5/2025	Ali	Science	Present	56
-1/6/2025	Ali	Science	Present	74
-1/7/2025	Ali	Science	Present	58
-1/8/2025	Ali	Science	Present	100
-1/9/2025	Ali	Science	Absent	83
-1/10/2025	Ali	Science	Present	67
-1/11/2025	Ali	Science	Absent	96
-1/12/2025	Ali	Science	Absent	99
-1/13/2025	Ali	Science	Present	99
-1/14/2025	Ali	Science	Present	89
-1/15/2025	Ali	Science	Absent	74
-1/16/2025	Ali	Science	Absent	58
-1/1/2025	Ali	English	Absent	63
-1/2/2025	Ali	English	Absent	57
-1/3/2025	Ali	English	Present	97
-1/4/2025	Ali	English	Present	87
-1/5/2025	Ali	English	Present	57
-1/6/2025	Ali	English	Absent	86
-1/7/2025	Ali	English	Present	90
-1/8/2025	Ali	English	Present	80
-1/9/2025	Ali	English	Present	89
-1/10/2025	Ali	English	Present	65
-1/11/2025	Ali	English	Absent	57
-1/12/2025	Ali	English	Absent	56
-1/13/2025	Ali	English	Absent	53
-1/14/2025	Ali	English	Present	79
-1/15/2025	Ali	English	Present	58
-1/16/2025	Ali	English	Absent	62
-1/1/2025	Ali	History	Present	100
-1/2/2025	Ali	History	Present	56
-1/3/2025	Ali	History	Present	83
-1/4/2025	Ali	History	Present	91
-1/5/2025	Ali	History	Present	61
-1/6/2025	Ali	History	Absent	61
-1/7/2025	Ali	History	Absent	96
-1/8/2025	Ali	History	Present	74
-1/9/2025	Ali	History	Present	97
-1/10/2025	Ali	History	Absent	52
-1/11/2025	Ali	History	Present	81
-1/12/2025	Ali	History	Absent	61
-1/13/2025	Ali	History	Absent	92
-1/14/2025	Ali	History	Present	71
-1/15/2025	Ali	History	Present	94
-1/16/2025	Ali	History	Present	78
-1/1/2025	Sara	Math	Present	65
-1/2/2025	Sara	Math	Absent	55
-1/3/2025	Sara	Math	Present	72
-1/4/2025	Sara	Math	Present	52
-1/5/2025	Sara	Math	Present	83
-1/6/2025	Sara	Math	Present	78
-1/7/2025	Sara	Math	Present	63
-1/8/2025	Sara	Math	Present	100
-1/9/2025	Sara	Math	Absent	72
-1/10/2025	Sara	Math	Absent	91
-1/11/2025	Sara	Math	Absent	91
-1/12/2025	Sara	Math	Absent	88
-1/13/2025	Sara	Math	Present	64
-1/14/2025	Sara	Math	Absent	94
-1/15/2025	Sara	Math	Absent	65
-1/16/2025	Sara	Math	Present	56
-1/1/2025	Sara	Science	Absent	72
-1/2/2025	Sara	Science	Present	95
-1/3/2025	Sara	Science	Present	90
-1/4/2025	Sara	Science	Present	65
-1/5/2025	Sara	Science	Absent	91
-1/6/2025	Sara	Science	Absent	97
-1/7/2025	Sara	Science	Present	66
-1/8/2025	Sara	Science	Present	64
-1/9/2025	Sara	Science	Present	93
-1/10/2025	Sara	Science	Present	53
-1/11/2025	Sara	Science	Present	78
-1/12/2025	Sara	Science	Present	77
-1/13/2025	Sara	Science	Absent	55
-1/14/2025	Sara	Science	Absent	57
-1/15/2025	Sara	Science	Present	79
-1/16/2025	Sara	Science	Present	83
-1/1/2025	Sara	English	Present	94
-1/2/2025	Sara	English	Absent	58
-1/3/2025	Sara	English	Present	84
-1/4/2025	Sara	English	Present	93
-1/5/2025	Sara	English	Present	84
-1/6/2025	Sara	English	Absent	55
-1/7/2025	Sara	English	Present	75
-1/8/2025	Sara	English	Present	92
-1/9/2025	Sara	English	Present	54
-1/10/2025	Sara	English	Absent	98
-1/11/2025	Sara	English	Absent	72
-1/12/2025	Sara	English	Absent	88
-1/13/2025	Sara	English	Present	63
-1/14/2025	Sara	English	Present	87
-1/15/2025	Sara	English	Absent	69
-1/16/2025	Sara	English	Present	80
-1/1/2025	Sara	History	Absent	64
-1/2/2025	Sara	History	Absent	60
-1/3/2025	Sara	History	Present	81
-1/4/2025	Sara	History	Absent	75
-1/5/2025	Sara	History	Present	58
-1/6/2025	Sara	History	Present	85
-1/7/2025	Sara	History	Absent	95
-1/8/2025	Sara	History	Absent	95
-1/9/2025	Sara	History	Present	74
-1/10/2025	Sara	History	Present	72
-1/11/2025	Sara	History	Present	79
-1/12/2025	Sara	History	Present	50
-1/13/2025	Sara	History	Present	83
-1/14/2025	Sara	History	Present	91
-1/15/2025	Sara	History	Present	60
-1/16/2025	Sara	History	Absent	69
-1/1/2025	Ahmed	Math	Absent	91
-1/2/2025	Ahmed	Math	Present	72
-1/3/2025	Ahmed	Math	Absent	96
-1/4/2025	Ahmed	Math	Absent	65
-1/5/2025	Ahmed	Math	Absent	92
-1/6/2025	Ahmed	Math	Present	62
-1/7/2025	Ahmed	Math	Absent	69
-1/8/2025	Ahmed	Math	Absent	73
-1/9/2025	Ahmed	Math	Present	70
-1/10/2025	Ahmed	Math	Present	80
-1/11/2025	Ahmed	Math	Present	89
-1/12/2025	Ahmed	Math	Absent	99
-1/13/2025	Ahmed	Math	Present	70
-1/14/2025	Ahmed	Math	Present	67
-1/15/2025	Ahmed	Math	Present	65
-1/16/2025	Ahmed	Math	Present	96
-1/1/2025	Ahmed	Science	Present	54
-1/2/2025	Ahmed	Science	Absent	89
-1/3/2025	Ahmed	Science	Present	88
-1/4/2025	Ahmed	Science	Present	74
-1/5/2025	Ahmed	Science	Absent	70
-1/6/2025	Ahmed	Science	Present	59
-1/7/2025	Ahmed	Science	Present	95
-1/8/2025	Ahmed	Science	Present	76
-1/9/2025	Ahmed	Science	Present	56
-1/10/2025	Ahmed	Science	Present	78
-1/11/2025	Ahmed	Science	Present	90
-1/12/2025	Ahmed	Science	Absent	74
-1/13/2025	Ahmed	Science	Absent	98
-1/14/2025	Ahmed	Science	Present	80
-1/15/2025	Ahmed	Science	Absent	56
-1/16/2025	Ahmed	Science	Present	84
-1/1/2025	Ahmed	English	Present	99
-1/2/2025	Ahmed	English	Present	90
-1/3/2025	Ahmed	English	Present	74
-1/4/2025	Ahmed	English	Present	71
-1/5/2025	Ahmed	English	Present	89
-1/6/2025	Ahmed	English	Absent	80
-1/7/2025	Ahmed	English	Present	80
-1/8/2025	Ahmed	English	Present	70
-1/9/2025	Ahmed	English	Present	54
-1/10/2025	Ahmed	English	Present	84
-1/11/2025	Ahmed	English	Absent	74
-1/12/2025	Ahmed	English	Absent	82
-1/13/2025	Ahmed	English	Present	81
-1/14/2025	Ahmed	English	Absent	81
-1/15/2025	Ahmed	English	Present	76
-1/16/2025	Ahmed	English	Absent	98
-1/1/2025	Ahmed	History	Absent	83
-1/2/2025	Ahmed	History	Present	76
-1/3/2025	Ahmed	History	Present	83
-1/4/2025	Ahmed	History	Present	58
-1/5/2025	Ahmed	History	Absent	77
-1/6/2025	Ahmed	History	Absent	74
-1/7/2025	Ahmed	History	Present	80
-1/8/2025	Ahmed	History	Absent	55
-1/9/2025	Ahmed	History	Present	84
-1/10/2025	Ahmed	History	Absent	96
-1/11/2025	Ahmed	History	Absent	69
-1/12/2025	Ahmed	History	Present	77
-1/13/2025	Ahmed	History	Present	70
-1/14/2025	Ahmed	History	Present	80
-1/15/2025	Ahmed	History	Present	95
-1/16/2025	Ahmed	History	Present	59
-1/1/2025	Zara	Math	Absent	95
-1/2/2025	Zara	Math	Present	95
-1/3/2025	Zara	Math	Present	53
-1/4/2025	Zara	Math	Present	65
-1/5/2025	Zara	Math	Absent	58
-1/6/2025	Zara	Math	Absent	99
-1/7/2025	Zara	Math	Present	68
-1/8/2025	Zara	Math	Present	69
-1/9/2025	Zara	Math	Absent	58
-1/10/2025	Zara	Math	Present	50
-1/11/2025	Zara	Math	Present	67
-1/12/2025	Zara	Math	Absent	71
-1/13/2025	Zara	Math	Present	51
-1/14/2025	Zara	Math	Present	58
-1/15/2025	Zara	Math	Present	53
-1/16/2025	Zara	Math	Present	57
-1/1/2025	Zara	Science	Present	61
-1/2/2025	Zara	Science	Absent	57
-1/3/2025	Zara	Science	Absent	69
-1/4/2025	Zara	Science	Present	72
-1/5/2025	Zara	Science	Present	81
-1/6/2025	Zara	Science	Present	51
-1/7/2025	Zara	Science	Present	83
-1/8/2025	Zara	Science	Present	56
-1/9/2025	Zara	Science	Absent	70
-1/10/2025	Zara	Science	Present	64
-1/11/2025	Zara	Science	Present	96
-1/12/2025	Zara	Science	Absent	56
-1/13/2025	Zara	Science	Present	100
-1/14/2025	Zara	Science	Present	81
-1/15/2025	Zara	Science	Absent	75
-1/16/2025	Zara	Science	Present	56
-1/1/2025	Zara	English	Absent	53
-1/2/2025	Zara	English	Present	66
-1/3/2025	Zara	English	Present	77
-1/4/2025	Zara	English	Present	70
-1/5/2025	Zara	English	Present	83
-1/6/2025	Zara	English	Present	50
-1/7/2025	Zara	English	Present	82
-1/8/2025	Zara	English	Present	82
-1/9/2025	Zara	English	Absent	60
-1/10/2025	Zara	English	Present	58
-1/11/2025	Zara	English	Present	63
-1/12/2025	Zara	English	Present	100
-1/13/2025	Zara	English	Present	83
-1/14/2025	Zara	English	Present	79
-1/15/2025	Zara	English	Present	88
-1/16/2025	Zara	English	Absent	51
-1/1/2025	Zara	History	Absent	52
-1/2/2025	Zara	History	Present	94
-1/3/2025	Zara	History	Absent	51
-1/4/2025	Zara	History	Absent	67
-1/5/2025	Zara	History	Absent	50
-1/6/2025	Zara	History	Present	73
-1/7/2025	Zara	History	Absent	53
-1/8/2025	Zara	History	Present	95
-1/9/2025	Zara	History	Present	55
-1/10/2025	Zara	History	Present	73
-1/11/2025	Zara	History	Present	89
-1/12/2025	Zara	History	Present	53
-1/13/2025	Zara	History	Present	59
-1/14/2025	Zara	History	Present	91
-1/15/2025	Zara	History	Absent	100
-1/16/2025	Zara	History	Absent	57
-1/1/2025	Hassan	Math	Present	88
-1/2/2025	Hassan	Math	Present	78
-1/3/2025	Hassan	Math	Present	85
-1/4/2025	Hassan	Math	Present	86
-1/5/2025	Hassan	Math	Present	91
-1/6/2025	Hassan	Math	Present	97
-1/7/2025	Hassan	Math	Present	78
-1/8/2025	Hassan	Math	Present	89
-1/9/2025	Hassan	Math	Present	98
-1/10/2025	Hassan	Math	Present	60
-1/11/2025	Hassan	Math	Present	51
-1/12/2025	Hassan	Math	Present	92
-1/13/2025	Hassan	Math	Present	86
-1/14/2025	Hassan	Math	Present	96
-1/15/2025	Hassan	Math	Absent	58
-1/16/2025	Hassan	Math	Present	86
-1/1/2025	Hassan	Science	Present	87
-1/2/2025	Hassan	Science	Present	76
-1/3/2025	Hassan	Science	Present	64
-1/4/2025	Hassan	Science	Absent	59
-1/5/2025	Hassan	Science	Present	65
-1/6/2025	Hassan	Science	Present	82
-1/7/2025	Hassan	Science	Present	69
-1/8/2025	Hassan	Science	Absent	76
-1/9/2025	Hassan	Science	Present	87
-1/10/2025	Hassan	Science	Present	50
-1/11/2025	Hassan	Science	Present	87
-1/12/2025	Hassan	Science	Present	52
-1/13/2025	Hassan	Science	Present	70
-1/14/2025	Hassan	Science	Present	54
-1/15/2025	Hassan	Science	Present	71
-1/16/2025	Hassan	Science	Present	99
-1/1/2025	Hassan	English	Present	76
-1/2/2025	Hassan	English	Present	78
-1/3/2025	Hassan	English	Absent	79
-1/4/2025	Hassan	English	Present	65
-1/5/2025	Hassan	English	Present	57
-1/6/2025	Hassan	English	Present	95
-1/7/2025	Hassan	English	Absent	98
-1/8/2025	Hassan	English	Absent	54
-1/9/2025	Hassan	English	Present	84
-1/10/2025	Hassan	English	Present	77
-1/11/2025	Hassan	English	Present	60
-1/12/2025	Hassan	English	Present	96
-1/13/2025	Hassan	English	Present	55
-1/14/2025	Hassan	English	Present	79
-1/15/2025	Hassan	English	Absent	77
-1/16/2025	Hassan	English	Absent	97
-1/1/2025	Hassan	History	Absent	95
-1/2/2025	Hassan	History	Present	92
-1/3/2025	Hassan	History	Absent	83
-1/4/2025	Hassan	History	Absent	84
-1/5/2025	Hassan	History	Absent	69
-1/6/2025	Hassan	History	Present	82
-1/7/2025	Hassan	History	Present	100
-1/8/2025	Hassan	History	Absent	96
-1/9/2025	Hassan	History	Absent	51
-1/10/2025	Hassan	History	Absent	73
-1/11/2025	Hassan	History	Present	57
-1/12/2025	Hassan	History	Absent	54
-1/13/2025	Hassan	History	Present	75
-1/14/2025	Hassan	History	Absent	87
-1/15/2025	Hassan	History	Present	93
-1/16/2025	Hassan	History	Present	55
+Date,Name,Subject,Attendance,Marks
+2025-01-01,Ali,Math,Present,90
+2025-01-02,Ali,Math,Present,92
+2025-01-03,Ali,Math,Present,88
+2025-01-04,Ali,Math,Present,95
+2025-01-05,Ali,Math,Present,89
+2025-01-06,Ali,Math,Present,93
+2025-01-07,Ali,Math,Present,91
+2025-01-08,Ali,Math,Present,94
+2025-01-09,Ali,Math,Present,90
+2025-01-10,Ali,Math,Present,92
+2025-01-11,Ali,Math,Present,88
+2025-01-12,Ali,Math,Present,95
+2025-01-13,Ali,Math,Present,89
+2025-01-14,Ali,Math,Present,93
+2025-01-15,Ali,Math,Present,91
+2025-01-16,Ali,Math,Present,94
+2025-01-01,Sara,Math,Present,88
+2025-01-02,Sara,Math,Absent,75
+2025-01-03,Sara,Math,Present,90
+2025-01-04,Sara,Math,Absent,80
+2025-01-05,Sara,Math,Present,85
+2025-01-06,Sara,Math,Absent,78
+2025-01-07,Sara,Math,Present,88
+2025-01-08,Sara,Math,Absent,82
+2025-01-09,Sara,Math,Present,90
+2025-01-10,Sara,Math,Absent,80
+2025-01-11,Sara,Math,Present,86
+2025-01-12,Sara,Math,Absent,79
+2025-01-13,Sara,Math,Present,87
+2025-01-14,Sara,Math,Absent,81
+2025-01-15,Sara,Math,Present,88
+2025-01-16,Sara,Math,Absent,83
+2025-01-01,Ahmed,Math,Present,90
+2025-01-02,Ahmed,Math,Present,88
+2025-01-03,Ahmed,Math,Present,92
+2025-01-04,Ahmed,Math,Present,85
+2025-01-05,Ahmed,Math,Present,87
+2025-01-06,Ahmed,Math,Present,91
+2025-01-07,Ahmed,Math,Present,89
+2025-01-08,Ahmed,Math,Present,90
+2025-01-09,Ahmed,Math,Absent,80
+2025-01-10,Ahmed,Math,Absent,78
+2025-01-11,Ahmed,Math,Absent,79
+2025-01-12,Ahmed,Math,Present,92
+2025-01-13,Ahmed,Math,Present,91
+2025-01-14,Ahmed,Math,Present,88
+2025-01-15,Ahmed,Math,Present,90
+2025-01-16,Ahmed,Math,Present,89
+2025-01-01,Zara,Math,Absent,70
+2025-01-02,Zara,Math,Absent,75
+2025-01-03,Zara,Math,Present,85
+2025-01-04,Zara,Math,Absent,78
+2025-01-05,Zara,Math,Absent,72
+2025-01-06,Zara,Math,Present,88
+2025-01-07,Zara,Math,Absent,80
+2025-01-08,Zara,Math,Absent,74
+2025-01-09,Zara,Math,Present,86
+2025-01-10,Zara,Math,Absent,79
+2025-01-11,Zara,Math,Absent,73
+2025-01-12,Zara,Math,Present,87
+2025-01-13,Zara,Math,Absent,77
+2025-01-14,Zara,Math,Absent,75
+2025-01-15,Zara,Math,Present,89
+2025-01-16,Zara,Math,Absent,76
+2025-01-01,Hassan,Math,Absent,60
+2025-01-02,Hassan,Math,Absent,65
+2025-01-03,Hassan,Math,Absent,62
+2025-01-04,Hassan,Math,Absent,68
+2025-01-05,Hassan,Math,Absent,64
+2025-01-06,Hassan,Math,Absent,66
+2025-01-07,Hassan,Math,Absent,63
+2025-01-08,Hassan,Math,Absent,67
+2025-01-09,Hassan,Math,Absent,61
+2025-01-10,Hassan,Math,Absent,69
+2025-01-11,Hassan,Math,Absent,65
+2025-01-12,Hassan,Math,Absent,64
+2025-01-13,Hassan,Math,Absent,66
+2025-01-14,Hassan,Math,Absent,63
+2025-01-15,Hassan,Math,Absent,68
+2025-01-16,Hassan,Math,Absent,62
