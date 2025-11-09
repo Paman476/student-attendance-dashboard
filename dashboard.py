@@ -26,9 +26,11 @@ st.subheader("📘 Subject-wise Attendance (%)")
 subject_attendance = data.groupby('Subject')['Attendance_Binary'].mean() * 100
 st.bar_chart(subject_attendance)
 
-# --- Attendance per Student ---
-st.subheader("🧍‍♂️ Student-wise Attendance (%)")
+# --- Individual Student Attendance Percentage ---
+st.subheader("🧍‍♂️ Individual Student Attendance (%)")
 student_attendance = data.groupby('Name')['Attendance_Binary'].mean() * 100
+student_attendance = student_attendance.round(2)
+student_attendance = student_attendance.sort_values(ascending=False)
 st.bar_chart(student_attendance)
 
 # --- Attendance Summary Table ---
@@ -55,7 +57,7 @@ fig, ax = plt.subplots()
 sns.heatmap(data[['Attendance_Binary', 'Marks']].corr(), annot=True, cmap='coolwarm', ax=ax)
 st.pyplot(fig)
 
-# --- Individual Student Search ---
+# --- Individual Student Search & Trend ---
 st.subheader("🔍 Check Student Details")
 name = st.text_input("Enter student name:")
 if name:
@@ -69,7 +71,8 @@ if name:
 
         st.success(f"**{name_cap}** - Attendance: {percent:.2f}%, Avg Marks: {avg_marks:.2f}")
 
-        # Attendance trend visualization
+        # Attendance trend visualization for selected student
+        st.subheader(f"📈 Attendance Trend for {name_cap}")
         st.line_chart(student_data.set_index('Date')['Attendance_Binary'])
     else:
         st.error("❌ No record found.")
