@@ -1,81 +1,407 @@
-Date	Name	Subject	Attendance	Marks
-1/1/2025	Ali	IT Infrastructure	Present	90
-1/2/2025	Ali	IT Infrastructure	Present	92
-1/3/2025	Ali	IT Infrastructure	Present	88
-1/4/2025	Ali	IT Infrastructure	Present	95
-1/5/2025	Ali	IT Infrastructure	Present	89
-1/6/2025	Ali	IT Infrastructure	Present	93
-1/7/2025	Ali	IT Infrastructure	Present	91
-1/8/2025	Ali	IT Infrastructure	Present	94
-1/9/2025	Ali	IT Infrastructure	Present	90
-1/10/2025	Ali	IT Infrastructure	Present	92
-1/11/2025	Ali	IT Infrastructure	Present	88
-1/12/2025	Ali	IT Infrastructure	Present	95
-1/13/2025	Ali	IT Infrastructure	Present	89
-1/14/2025	Ali	IT Infrastructure	Present	93
-1/15/2025	Ali	IT Infrastructure	Present	91
-1/16/2025	Ali	IT Infrastructure	Present	94
-1/1/2025	Sara	IT Infrastructure	Present	88
-1/2/2025	Sara	IT Infrastructure	Absent	75
-1/3/2025	Sara	IT Infrastructure	Present	90
-1/4/2025	Sara	IT Infrastructure	Absent	80
-1/5/2025	Sara	IT Infrastructure	Present	85
-1/6/2025	Sara	IT Infrastructure	Absent	78
-1/7/2025	Sara	IT Infrastructure	Present	88
-1/8/2025	Sara	IT Infrastructure	Absent	82
-1/9/2025	Sara	IT Infrastructure	Present	90
-1/10/2025	Sara	IT Infrastructure	Absent	80
-1/11/2025	Sara	IT Infrastructure	Present	86
-1/12/2025	Sara	IT Infrastructure	Absent	79
-1/13/2025	Sara	IT Infrastructure	Present	87
-1/14/2025	Sara	IT Infrastructure	Absent	81
-1/15/2025	Sara	IT Infrastructure	Present	88
-1/16/2025	Sara	IT Infrastructure	Absent	83
-1/1/2025	Ahmed	IT Infrastructure	Present	90
-1/2/2025	Ahmed	IT Infrastructure	Present	88
-1/3/2025	Ahmed	IT Infrastructure	Present	92
-1/4/2025	Ahmed	IT Infrastructure	Present	85
-1/5/2025	Ahmed	IT Infrastructure	Present	87
-1/6/2025	Ahmed	IT Infrastructure	Present	91
-1/7/2025	Ahmed	IT Infrastructure	Present	89
-1/8/2025	Ahmed	IT Infrastructure	Present	90
-1/9/2025	Ahmed	IT Infrastructure	Absent	80
-1/10/2025	Ahmed	IT Infrastructure	Absent	78
-1/11/2025	Ahmed	IT Infrastructure	Absent	79
-1/12/2025	Ahmed	IT Infrastructure	Present	92
-1/13/2025	Ahmed	IT Infrastructure	Present	91
-1/14/2025	Ahmed	IT Infrastructure	Present	88
-1/15/2025	Ahmed	IT Infrastructure	Present	90
-1/16/2025	Ahmed	IT Infrastructure	Present	89
-1/1/2025	Zara	IT Infrastructure	Absent	70
-1/2/2025	Zara	IT Infrastructure	Absent	75
-1/3/2025	Zara	IT Infrastructure	Present	85
-1/4/2025	Zara	IT Infrastructure	Absent	78
-1/5/2025	Zara	IT Infrastructure	Absent	72
-1/6/2025	Zara	IT Infrastructure	Present	88
-1/7/2025	Zara	IT Infrastructure	Absent	80
-1/8/2025	Zara	IT Infrastructure	Absent	74
-1/9/2025	Zara	IT Infrastructure	Present	86
-1/10/2025	Zara	IT Infrastructure	Absent	79
-1/11/2025	Zara	IT Infrastructure	Absent	73
-1/12/2025	Zara	IT Infrastructure	Present	87
-1/13/2025	Zara	IT Infrastructure	Absent	77
-1/14/2025	Zara	IT Infrastructure	Absent	75
-1/15/2025	Zara	IT Infrastructure	Present	89
-1/16/2025	Zara	IT Infrastructure	Absent	76
-1/1/2025	Hassan	IT Infrastructure	Absent	60
-1/2/2025	Hassan	IT Infrastructure	Absent	65
-1/3/2025	Hassan	IT Infrastructure	Absent	62
-1/4/2025	Hassan	IT Infrastructure	Absent	68
-1/5/2025	Hassan	IT Infrastructure	Absent	64
-1/6/2025	Hassan	IT Infrastructure	Absent	66
-1/7/2025	Hassan	IT Infrastructure	Absent	63
-1/8/2025	Hassan	IT Infrastructure	Absent	67
-1/9/2025	Hassan	IT Infrastructure	Absent	61
-1/10/2025	Hassan	IT Infrastructure	Absent	69
-1/11/2025	Hassan	IT Infrastructure	Absent	65
-1/12/2025	Hassan	IT Infrastructure	Absent	64
-1/13/2025	Hassan	IT Infrastructure	Absent	66
-1/14/2025	Hassan	IT Infrastructure	Absent	63
-1/15/2025	Hassan	IT Infrastructure	Absent	68
-1/16/2025	Hassan	IT Infrastructure	Absent	62
+Date,Name,Subject,Attendance,Marks
+1/1/2025,Ali,IT Infrastructure,Present,90
+1/2/2025,Ali,IT Infrastructure,Present,92
+1/3/2025,Ali,IT Infrastructure,Present,88
+1/4/2025,Ali,IT Infrastructure,Present,95
+1/5/2025,Ali,IT Infrastructure,Present,89
+1/6/2025,Ali,IT Infrastructure,Present,93
+1/7/2025,Ali,IT Infrastructure,Present,91
+1/8/2025,Ali,IT Infrastructure,Present,94
+1/9/2025,Ali,IT Infrastructure,Present,90
+1/10/2025,Ali,IT Infrastructure,Present,92
+1/11/2025,Ali,IT Infrastructure,Present,88
+1/12/2025,Ali,IT Infrastructure,Present,95
+1/13/2025,Ali,IT Infrastructure,Present,89
+1/14/2025,Ali,IT Infrastructure,Present,93
+1/15/2025,Ali,IT Infrastructure,Present,91
+1/16/2025,Ali,IT Infrastructure,Present,94
+1/1/2025,Sara,IT Infrastructure,Present,88
+1/2/2025,Sara,IT Infrastructure,Absent,75
+1/3/2025,Sara,IT Infrastructure,Present,90
+1/4/2025,Sara,IT Infrastructure,Absent,80
+1/5/2025,Sara,IT Infrastructure,Present,85
+1/6/2025,Sara,IT Infrastructure,Absent,78
+1/7/2025,Sara,IT Infrastructure,Present,88
+1/8/2025,Sara,IT Infrastructure,Absent,82
+1/9/2025,Sara,IT Infrastructure,Present,90
+1/10/2025,Sara,IT Infrastructure,Absent,80
+1/11/2025,Sara,IT Infrastructure,Present,86
+1/12/2025,Sara,IT Infrastructure,Absent,79
+1/13/2025,Sara,IT Infrastructure,Present,87
+1/14/2025,Sara,IT Infrastructure,Absent,81
+1/15/2025,Sara,IT Infrastructure,Present,88
+1/16/2025,Sara,IT Infrastructure,Absent,83
+1/1/2025,Ahmed,IT Infrastructure,Present,90
+1/2/2025,Ahmed,IT Infrastructure,Present,88
+1/3/2025,Ahmed,IT Infrastructure,Present,92
+1/4/2025,Ahmed,IT Infrastructure,Present,85
+1/5/2025,Ahmed,IT Infrastructure,Present,87
+1/6/2025,Ahmed,IT Infrastructure,Present,91
+1/7/2025,Ahmed,IT Infrastructure,Present,89
+1/8/2025,Ahmed,IT Infrastructure,Present,90
+1/9/2025,Ahmed,IT Infrastructure,Absent,80
+1/10/2025,Ahmed,IT Infrastructure,Absent,78
+1/11/2025,Ahmed,IT Infrastructure,Absent,79
+1/12/2025,Ahmed,IT Infrastructure,Present,92
+1/13/2025,Ahmed,IT Infrastructure,Present,91
+1/14/2025,Ahmed,IT Infrastructure,Present,88
+1/15/2025,Ahmed,IT Infrastructure,Present,90
+1/16/2025,Ahmed,IT Infrastructure,Present,89
+1/1/2025,Zara,IT Infrastructure,Absent,70
+1/2/2025,Zara,IT Infrastructure,Absent,75
+1/3/2025,Zara,IT Infrastructure,Present,85
+1/4/2025,Zara,IT Infrastructure,Absent,78
+1/5/2025,Zara,IT Infrastructure,Absent,72
+1/6/2025,Zara,IT Infrastructure,Present,88
+1/7/2025,Zara,IT Infrastructure,Absent,80
+1/8/2025,Zara,IT Infrastructure,Absent,74
+1/9/2025,Zara,IT Infrastructure,Present,86
+1/10/2025,Zara,IT Infrastructure,Absent,79
+1/11/2025,Zara,IT Infrastructure,Absent,73
+1/12/2025,Zara,IT Infrastructure,Present,87
+1/13/2025,Zara,IT Infrastructure,Absent,77
+1/14/2025,Zara,IT Infrastructure,Absent,75
+1/15/2025,Zara,IT Infrastructure,Present,89
+1/16/2025,Zara,IT Infrastructure,Absent,76
+1/1/2025,Hassan,IT Infrastructure,Absent,60
+1/2/2025,Hassan,IT Infrastructure,Absent,65
+1/3/2025,Hassan,IT Infrastructure,Absent,62
+1/4/2025,Hassan,IT Infrastructure,Absent,68
+1/5/2025,Hassan,IT Infrastructure,Absent,64
+1/6/2025,Hassan,IT Infrastructure,Absent,66
+1/7/2025,Hassan,IT Infrastructure,Absent,63
+1/8/2025,Hassan,IT Infrastructure,Absent,67
+1/9/2025,Hassan,IT Infrastructure,Absent,61
+1/10/2025,Hassan,IT Infrastructure,Absent,69
+1/11/2025,Hassan,IT Infrastructure,Absent,65
+1/12/2025,Hassan,IT Infrastructure,Absent,64
+1/13/2025,Hassan,IT Infrastructure,Absent,66
+1/14/2025,Hassan,IT Infrastructure,Absent,63
+1/15/2025,Hassan,IT Infrastructure,Absent,68
+1/16/2025,Hassan,IT Infrastructure,Absent,62
+
+1/1/2025,Ali,Data Mining,Present,90
+1/2/2025,Ali,Data Mining,Present,92
+1/3/2025,Ali,Data Mining,Present,88
+1/4/2025,Ali,Data Mining,Present,95
+1/5/2025,Ali,Data Mining,Present,89
+1/6/2025,Ali,Data Mining,Present,93
+1/7/2025,Ali,Data Mining,Present,91
+1/8/2025,Ali,Data Mining,Present,94
+1/9/2025,Ali,Data Mining,Present,90
+1/10/2025,Ali,Data Mining,Present,92
+1/11/2025,Ali,Data Mining,Present,88
+1/12/2025,Ali,Data Mining,Present,95
+1/13/2025,Ali,Data Mining,Present,89
+1/14/2025,Ali,Data Mining,Present,93
+1/15/2025,Ali,Data Mining,Present,91
+1/16/2025,Ali,Data Mining,Present,94
+1/1/2025,Sara,Data Mining,Present,88
+1/2/2025,Sara,Data Mining,Absent,75
+1/3/2025,Sara,Data Mining,Present,90
+1/4/2025,Sara,Data Mining,Absent,80
+1/5/2025,Sara,Data Mining,Present,85
+1/6/2025,Sara,Data Mining,Absent,78
+1/7/2025,Sara,Data Mining,Present,88
+1/8/2025,Sara,Data Mining,Absent,82
+1/9/2025,Sara,Data Mining,Present,90
+1/10/2025,Sara,Data Mining,Absent,80
+1/11/2025,Sara,Data Mining,Present,86
+1/12/2025,Sara,Data Mining,Absent,79
+1/13/2025,Sara,Data Mining,Present,87
+1/14/2025,Sara,Data Mining,Absent,81
+1/15/2025,Sara,Data Mining,Present,88
+1/16/2025,Sara,Data Mining,Absent,83
+1/1/2025,Ahmed,Data Mining,Present,90
+1/2/2025,Ahmed,Data Mining,Present,88
+1/3/2025,Ahmed,Data Mining,Present,92
+1/4/2025,Ahmed,Data Mining,Present,85
+1/5/2025,Ahmed,Data Mining,Present,87
+1/6/2025,Ahmed,Data Mining,Present,91
+1/7/2025,Ahmed,Data Mining,Present,89
+1/8/2025,Ahmed,Data Mining,Present,90
+1/9/2025,Ahmed,Data Mining,Absent,80
+1/10/2025,Ahmed,Data Mining,Absent,78
+1/11/2025,Ahmed,Data Mining,Absent,79
+1/12/2025,Ahmed,Data Mining,Present,92
+1/13/2025,Ahmed,Data Mining,Present,91
+1/14/2025,Ahmed,Data Mining,Present,88
+1/15/2025,Ahmed,Data Mining,Present,90
+1/16/2025,Ahmed,Data Mining,Present,89
+1/1/2025,Zara,Data Mining,Absent,70
+1/2/2025,Zara,Data Mining,Absent,75
+1/3/2025,Zara,Data Mining,Present,85
+1/4/2025,Zara,Data Mining,Absent,78
+1/5/2025,Zara,Data Mining,Absent,72
+1/6/2025,Zara,Data Mining,Present,88
+1/7/2025,Zara,Data Mining,Absent,80
+1/8/2025,Zara,Data Mining,Absent,74
+1/9/2025,Zara,Data Mining,Present,86
+1/10/2025,Zara,Data Mining,Absent,79
+1/11/2025,Zara,Data Mining,Absent,73
+1/12/2025,Zara,Data Mining,Present,87
+1/13/2025,Zara,Data Mining,Absent,77
+1/14/2025,Zara,Data Mining,Absent,75
+1/15/2025,Zara,Data Mining,Present,89
+1/16/2025,Zara,Data Mining,Absent,76
+1/1/2025,Hassan,Data Mining,Absent,60
+1/2/2025,Hassan,Data Mining,Absent,65
+1/3/2025,Hassan,Data Mining,Absent,62
+1/4/2025,Hassan,Data Mining,Absent,68
+1/5/2025,Hassan,Data Mining,Absent,64
+1/6/2025,Hassan,Data Mining,Absent,66
+1/7/2025,Hassan,Data Mining,Absent,63
+1/8/2025,Hassan,Data Mining,Absent,67
+1/9/2025,Hassan,Data Mining,Absent,61
+1/10/2025,Hassan,Data Mining,Absent,69
+1/11/2025,Hassan,Data Mining,Absent,65
+1/12/2025,Hassan,Data Mining,Absent,64
+1/13/2025,Hassan,Data Mining,Absent,66
+1/14/2025,Hassan,Data Mining,Absent,63
+1/15/2025,Hassan,Data Mining,Absent,68
+1/16/2025,Hassan,Data Mining,Absent,62
+
+1/1/2025,Ali,Modeling and Simulations,Present,90
+1/2/2025,Ali,Modeling and Simulations,Present,92
+1/3/2025,Ali,Modeling and Simulations,Present,88
+1/4/2025,Ali,Modeling and Simulations,Present,95
+1/5/2025,Ali,Modeling and Simulations,Present,89
+1/6/2025,Ali,Modeling and Simulations,Present,93
+1/7/2025,Ali,Modeling and Simulations,Present,91
+1/8/2025,Ali,Modeling and Simulations,Present,94
+1/9/2025,Ali,Modeling and Simulations,Present,90
+1/10/2025,Ali,Modeling and Simulations,Present,92
+1/11/2025,Ali,Modeling and Simulations,Present,88
+1/12/2025,Ali,Modeling and Simulations,Present,95
+1/13/2025,Ali,Modeling and Simulations,Present,89
+1/14/2025,Ali,Modeling and Simulations,Present,93
+1/15/2025,Ali,Modeling and Simulations,Present,91
+1/16/2025,Ali,Modeling and Simulations,Present,94
+1/1/2025,Sara,Modeling and Simulations,Present,88
+1/2/2025,Sara,Modeling and Simulations,Absent,75
+1/3/2025,Sara,Modeling and Simulations,Present,90
+1/4/2025,Sara,Modeling and Simulations,Absent,80
+1/5/2025,Sara,Modeling and Simulations,Present,85
+1/6/2025,Sara,Modeling and Simulations,Absent,78
+1/7/2025,Sara,Modeling and Simulations,Present,88
+1/8/2025,Sara,Modeling and Simulations,Absent,82
+1/9/2025,Sara,Modeling and Simulations,Present,90
+1/10/2025,Sara,Modeling and Simulations,Absent,80
+1/11/2025,Sara,Modeling and Simulations,Present,86
+1/12/2025,Sara,Modeling and Simulations,Absent,79
+1/13/2025,Sara,Modeling and Simulations,Present,87
+1/14/2025,Sara,Modeling and Simulations,Absent,81
+1/15/2025,Sara,Modeling and Simulations,Present,88
+1/16/2025,Sara,Modeling and Simulations,Absent,83
+1/1/2025,Ahmed,Modeling and Simulations,Present,90
+1/2/2025,Ahmed,Modeling and Simulations,Present,88
+1/3/2025,Ahmed,Modeling and Simulations,Present,92
+1/4/2025,Ahmed,Modeling and Simulations,Present,85
+1/5/2025,Ahmed,Modeling and Simulations,Present,87
+1/6/2025,Ahmed,Modeling and Simulations,Present,91
+1/7/2025,Ahmed,Modeling and Simulations,Present,89
+1/8/2025,Ahmed,Modeling and Simulations,Present,90
+1/9/2025,Ahmed,Modeling and Simulations,Absent,80
+1/10/2025,Ahmed,Modeling and Simulations,Absent,78
+1/11/2025,Ahmed,Modeling and Simulations,Absent,79
+1/12/2025,Ahmed,Modeling and Simulations,Present,92
+1/13/2025,Ahmed,Modeling and Simulations,Present,91
+1/14/2025,Ahmed,Modeling and Simulations,Present,88
+1/15/2025,Ahmed,Modeling and Simulations,Present,90
+1/16/2025,Ahmed,Modeling and Simulations,Present,89
+1/1/2025,Zara,Modeling and Simulations,Absent,70
+1/2/2025,Zara,Modeling and Simulations,Absent,75
+1/3/2025,Zara,Modeling and Simulations,Present,85
+1/4/2025,Zara,Modeling and Simulations,Absent,78
+1/5/2025,Zara,Modeling and Simulations,Absent,72
+1/6/2025,Zara,Modeling and Simulations,Present,88
+1/7/2025,Zara,Modeling and Simulations,Absent,80
+1/8/2025,Zara,Modeling and Simulations,Absent,74
+1/9/2025,Zara,Modeling and Simulations,Present,86
+1/10/2025,Zara,Modeling and Simulations,Absent,79
+1/11/2025,Zara,Modeling and Simulations,Absent,73
+1/12/2025,Zara,Modeling and Simulations,Present,87
+1/13/2025,Zara,Modeling and Simulations,Absent,77
+1/14/2025,Zara,Modeling and Simulations,Absent,75
+1/15/2025,Zara,Modeling and Simulations,Present,89
+1/16/2025,Zara,Modeling and Simulations,Absent,76
+1/1/2025,Hassan,Modeling and Simulations,Absent,60
+1/2/2025,Hassan,Modeling and Simulations,Absent,65
+1/3/2025,Hassan,Modeling and Simulations,Absent,62
+1/4/2025,Hassan,Modeling and Simulations,Absent,68
+1/5/2025,Hassan,Modeling and Simulations,Absent,64
+1/6/2025,Hassan,Modeling and Simulations,Absent,66
+1/7/2025,Hassan,Modeling and Simulations,Absent,63
+1/8/2025,Hassan,Modeling and Simulations,Absent,67
+1/9/2025,Hassan,Modeling and Simulations,Absent,61
+1/10/2025,Hassan,Modeling and Simulations,Absent,69
+1/11/2025,Hassan,Modeling and Simulations,Absent,65
+1/12/2025,Hassan,Modeling and Simulations,Absent,64
+1/13/2025,Hassan,Modeling and Simulations,Absent,66
+1/14/2025,Hassan,Modeling and Simulations,Absent,63
+1/15/2025,Hassan,Modeling and Simulations,Absent,68
+1/16/2025,Hassan,Modeling and Simulations,Absent,62
+
+1/1/2025,Ali,Routing and Switching,Present,90
+1/2/2025,Ali,Routing and Switching,Present,92
+1/3/2025,Ali,Routing and Switching,Present,88
+1/4/2025,Ali,Routing and Switching,Present,95
+1/5/2025,Ali,Routing and Switching,Present,89
+1/6/2025,Ali,Routing and Switching,Present,93
+1/7/2025,Ali,Routing and Switching,Present,91
+1/8/2025,Ali,Routing and Switching,Present,94
+1/9/2025,Ali,Routing and Switching,Present,90
+1/10/2025,Ali,Routing and Switching,Present,92
+1/11/2025,Ali,Routing and Switching,Present,88
+1/12/2025,Ali,Routing and Switching,Present,95
+1/13/2025,Ali,Routing and Switching,Present,89
+1/14/2025,Ali,Routing and Switching,Present,93
+1/15/2025,Ali,Routing and Switching,Present,91
+1/16/2025,Ali,Routing and Switching,Present,94
+1/1/2025,Sara,Routing and Switching,Present,88
+1/2/2025,Sara,Routing and Switching,Absent,75
+1/3/2025,Sara,Routing and Switching,Present,90
+1/4/2025,Sara,Routing and Switching,Absent,80
+1/5/2025,Sara,Routing and Switching,Present,85
+1/6/2025,Sara,Routing and Switching,Absent,78
+1/7/2025,Sara,Routing and Switching,Present,88
+1/8/2025,Sara,Routing and Switching,Absent,82
+1/9/2025,Sara,Routing and Switching,Present,90
+1/10/2025,Sara,Routing and Switching,Absent,80
+1/11/2025,Sara,Routing and Switching,Present,86
+1/12/2025,Sara,Routing and Switching,Absent,79
+1/13/2025,Sara,Routing and Switching,Present,87
+1/14/2025,Sara,Routing and Switching,Absent,81
+1/15/2025,Sara,Routing and Switching,Present,88
+1/16/2025,Sara,Routing and Switching,Absent,83
+1/1/2025,Ahmed,Routing and Switching,Present,90
+1/2/2025,Ahmed,Routing and Switching,Present,88
+1/3/2025,Ahmed,Routing and Switching,Present,92
+1/4/2025,Ahmed,Routing and Switching,Present,85
+1/5/2025,Ahmed,Routing and Switching,Present,87
+1/6/2025,Ahmed,Routing and Switching,Present,91
+1/7/2025,Ahmed,Routing and Switching,Present,89
+1/8/2025,Ahmed,Routing and Switching,Present,90
+1/9/2025,Ahmed,Routing and Switching,Absent,80
+1/10/2025,Ahmed,Routing and Switching,Absent,78
+1/11/2025,Ahmed,Routing and Switching,Absent,79
+1/12/2025,Ahmed,Routing and Switching,Present,92
+1/13/2025,Ahmed,Routing and Switching,Present,91
+1/14/2025,Ahmed,Routing and Switching,Present,88
+1/15/2025,Ahmed,Routing and Switching,Present,90
+1/16/2025,Ahmed,Routing and Switching,Present,89
+1/1/2025,Zara,Routing and Switching,Absent,70
+1/2/2025,Zara,Routing and Switching,Absent,75
+1/3/2025,Zara,Routing and Switching,Present,85
+1/4/2025,Zara,Routing and Switching,Absent,78
+1/5/2025,Zara,Routing and Switching,Absent,72
+1/6/2025,Zara,Routing and Switching,Present,88
+1/7/2025,Zara,Routing and Switching,Absent,80
+1/8/2025,Zara,Routing and Switching,Absent,74
+1/9/2025,Zara,Routing and Switching,Present,86
+1/10/2025,Zara,Routing and Switching,Absent,79
+1/11/2025,Zara,Routing and Switching,Absent,73
+1/12/2025,Zara,Routing and Switching,Present,87
+1/13/2025,Zara,Routing and Switching,Absent,77
+1/14/2025,Zara,Routing and Switching,Absent,75
+1/15/2025,Zara,Routing and Switching,Present,89
+1/16/2025,Zara,Routing and Switching,Absent,76
+1/1/2025,Hassan,Routing and Switching,Absent,60
+1/2/2025,Hassan,Routing and Switching,Absent,65
+1/3/2025,Hassan,Routing and Switching,Absent,62
+1/4/2025,Hassan,Routing and Switching,Absent,68
+1/5/2025,Hassan,Routing and Switching,Absent,64
+1/6/2025,Hassan,Routing and Switching,Absent,66
+1/7/2025,Hassan,Routing and Switching,Absent,63
+1/8/2025,Hassan,Routing and Switching,Absent,67
+1/9/2025,Hassan,Routing and Switching,Absent,61
+1/10/2025,Hassan,Routing and Switching,Absent,69
+1/11/2025,Hassan,Routing and Switching,Absent,65
+1/12/2025,Hassan,Routing and Switching,Absent,64
+1/13/2025,Hassan,Routing and Switching,Absent,66
+1/14/2025,Hassan,Routing and Switching,Absent,63
+1/15/2025,Hassan,Routing and Switching,Absent,68
+1/16/2025,Hassan,Routing and Switching,Absent,62
+1/1/2025,Ali,Web Technologies,Present,90
+1/2/2025,Ali,Web Technologies,Present,92
+1/3/2025,Ali,Web Technologies,Present,88
+1/4/2025,Ali,Web Technologies,Present,95
+1/5/2025,Ali,Web Technologies,Present,89
+1/6/2025,Ali,Web Technologies,Present,93
+1/7/2025,Ali,Web Technologies,Present,91
+1/8/2025,Ali,Web Technologies,Present,94
+1/9/2025,Ali,Web Technologies,Present,90
+1/10/2025,Ali,Web Technologies,Present,92
+1/11/2025,Ali,Web Technologies,Present,88
+1/12/2025,Ali,Web Technologies,Present,95
+1/13/2025,Ali,Web Technologies,Present,89
+1/14/2025,Ali,Web Technologies,Present,93
+1/15/2025,Ali,Web Technologies,Present,91
+1/16/2025,Ali,Web Technologies,Present,94
+1/1/2025,Sara,Web Technologies,Present,88
+1/2/2025,Sara,Web Technologies,Absent,75
+1/3/2025,Sara,Web Technologies,Present,90
+1/4/2025,Sara,Web Technologies,Absent,80
+1/5/2025,Sara,Web Technologies,Present,85
+1/6/2025,Sara,Web Technologies,Absent,78
+1/7/2025,Sara,Web Technologies,Present,88
+1/8/2025,Sara,Web Technologies,Absent,82
+1/9/2025,Sara,Web Technologies,Present,90
+1/10/2025,Sara,Web Technologies,Absent,80
+1/11/2025,Sara,Web Technologies,Present,86
+1/12/2025,Sara,Web Technologies,Absent,79
+1/13/2025,Sara,Web Technologies,Present,87
+1/14/2025,Sara,Web Technologies,Absent,81
+1/15/2025,Sara,Web Technologies,Present,88
+1/16/2025,Sara,Web Technologies,Absent,83
+1/1/2025,Ahmed,Web Technologies,Present,90
+1/2/2025,Ahmed,Web Technologies,Present,88
+1/3/2025,Ahmed,Web Technologies,Present,92
+1/4/2025,Ahmed,Web Technologies,Present,85
+1/5/2025,Ahmed,Web Technologies,Present,87
+1/6/2025,Ahmed,Web Technologies,Present,91
+1/7/2025,Ahmed,Web Technologies,Present,89
+1/8/2025,Ahmed,Web Technologies,Present,90
+1/9/2025,Ahmed,Web Technologies,Absent,80
+1/10/2025,Ahmed,Web Technologies,Absent,78
+1/11/2025,Ahmed,Web Technologies,Absent,79
+1/12/2025,Ahmed,Web Technologies,Present,92
+1/13/2025,Ahmed,Web Technologies,Present,91
+1/14/2025,Ahmed,Web Technologies,Present,88
+1/15/2025,Ahmed,Web Technologies,Present,90
+1/16/2025,Ahmed,Web Technologies,Present,89
+1/1/2025,Zara,Web Technologies,Absent,70
+1/2/2025,Zara,Web Technologies,Absent,75
+1/3/2025,Zara,Web Technologies,Present,85
+1/4/2025,Zara,Web Technologies,Absent,78
+1/5/2025,Zara,Web Technologies,Absent,72
+1/6/2025,Zara,Web Technologies,Present,88
+1/7/2025,Zara,Web Technologies,Absent,80
+1/8/2025,Zara,Web Technologies,Absent,74
+1/9/2025,Zara,Web Technologies,Present,86
+1/10/2025,Zara,Web Technologies,Absent,79
+1/11/2025,Zara,Web Technologies,Absent,73
+1/12/2025,Zara,Web Technologies,Present,87
+1/13/2025,Zara,Web Technologies,Absent,77
+1/14/2025,Zara,Web Technologies,Absent,75
+1/15/2025,Zara,Web Technologies,Present,89
+1/16/2025,Zara,Web Technologies,Absent,76
+1/1/2025,Hassan,Web Technologies,Absent,60
+1/2/2025,Hassan,Web Technologies,Absent,65
+1/3/2025,Hassan,Web Technologies,Absent,62
+1/4/2025,Hassan,Web Technologies,Absent,68
+1/5/2025,Hassan,Web Technologies,Absent,64
+1/6/2025,Hassan,Web Technologies,Absent,66
+1/7/2025,Hassan,Web Technologies,Absent,63
+1/8/2025,Hassan,Web Technologies,Absent,67
+1/9/2025,Hassan,Web Technologies,Absent,61
+1/10/2025,Hassan,Web Technologies,Absent,69
+1/11/2025,Hassan,Web Technologies,Absent,65
+1/12/2025,Hassan,Web Technologies,Absent,64
+1/13/2025,Hassan,Web Technologies,Absent,66
+1/14/2025,Hassan,Web Technologies,Absent,63
+1/15/2025,Hassan,Web Technologies,Absent,68
+1/16/2025,Hassan,Web Technologies,Absent,62 
+
+
+
