@@ -38,9 +38,9 @@ try:
     with col_title:
         st.title("🎓 Student Attendance Dashboard")
 except:
-    st.title("🎓  Student Attendance Dashboard")
+    st.title("🎓 Student Attendance Dashboard")
 
-st.markdown("Search a student to view their **subject-wise attendance** (green = Present, red = Absent).")
+st.markdown("Search a student to view their **attendance percentage**.")
 
 # ---------------- Load and clean data ----------------
 @st.cache_data
@@ -76,7 +76,6 @@ if not available_subjects:
 
 # ---------------- Sidebar Controls ----------------
 st.sidebar.header("Filters & Search")
-student_list = sorted(data['Name'].unique())
 student_input = st.sidebar.text_input("Search student name (exact):", "")
 subject_filter = st.sidebar.selectbox("Subject filter (All subjects shown by default):", ["All"] + available_subjects)
 date_min = data['Date'].min()
@@ -139,6 +138,20 @@ if student_input.strip():
 
             st.markdown("---")
 
+            # ---------------- Overall Attendance Pie Chart ----------------
+            st.subheader("📊 Overall Attendance Percentage")
+            labels = ['Present', 'Absent']
+            sizes = [present_count, absent_count]
+            colors = ['green', 'red']
+
+            fig1, ax1 = plt.subplots(figsize=(5,5))
+            ax1.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%',
+                    startangle=90, textprops={'color':'white', 'fontsize':12})
+            ax1.axis('equal')  # Equal aspect ratio ensures pie is circular
+            st.pyplot(fig1)
+
+            st.markdown("---")
+
             # ---------------- Subject-wise Summary Table ----------------
             st.subheader("📄 Subject-wise Summary")
             subj_summary = sdata.groupby('Subject').agg(
@@ -147,50 +160,6 @@ if student_input.strip():
             )
             subj_summary['Attendance %'] = (subj_summary['Present'] / subj_summary['Total'] * 100).round(2)
             st.dataframe(subj_summary.sort_values('Attendance %', ascending=False))
-
-            # ---------------- Cumulative Attendance % Plot ----------------
-            st.subheader("📊 Subject-wise Attendance % Over Time")
-
-            subjects_for_student = sorted(sdata['Subject'].unique())
-            y_positions = {subj: idx for idx, subj in enumerate(subjects_for_student)}
-
-            fig, ax = plt.subplots(figsize=(12, 3 + 0.6*len(subjects_for_student)))
-
-            for subj in subjects_for_student:
-                subj_df = sdata[sdata['Subject'] == subj].sort_values('Date')
-                dates = subj_df['Date']
-                cumulative_present = subj_df['Attendance_Binary'].cumsum()
-                total_classes = range(1, len(subj_df)+1)
-                attendance_pct = cumulative_present / total_classes * 100
-
-                y = [y_positions[subj]] * len(dates)
-                colors = ['green' if val >= 50 else 'red' for val in attendance_pct]
-
-                ax.scatter(dates, y, c=colors, s=200, edgecolors='k', alpha=0.9)
-
-                for d, p, yy in zip(dates, attendance_pct, y):
-                    ax.text(d, yy + 0.1, f"{p:.0f}%", color='#E6EEF3', fontsize=8, ha='center', va='bottom')
-
-                ax.text(dates.min() - pd.Timedelta(days=0.6), y_positions[subj], subj,
-                        va='center', ha='right', color='#E6EEF3', fontsize=10, fontweight='bold')
-
-            ax.set_yticks(list(y_positions.values()))
-            ax.set_yticklabels([])
-            ax.set_ylim(-1, len(subjects_for_student))
-            ax.set_xlabel("Date")
-            ax.set_title(f"{student_name_matched} — Cumulative Attendance % by Subject", color='#E6EEF3', fontsize=14)
-            ax.grid(True, linestyle='--', alpha=0.3)
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            st.pyplot(fig)
-
-            st.markdown("---")
-
-            # ---------------- Attendance Trend Line Chart ----------------
-            st.subheader("📈 Attendance Trend (per Subject)")
-            pivot = sdata.pivot(index='Date', columns='Subject', values='Attendance_Binary').fillna(0)
-            pivot_pct = pivot.cumsum() / (pivot.notna().cumsum()) * 100
-            st.line_chart(pivot_pct)
 
             st.markdown("---")
 
