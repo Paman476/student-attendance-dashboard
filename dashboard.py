@@ -35,6 +35,18 @@ summary['Total'] = summary.sum(axis=1)
 summary['Attendance %'] = (summary.get('Present', 0) / summary['Total']) * 100
 st.dataframe(summary)
 
+# --- ✅ Day-wise Attendance Summary ---
+st.subheader("🗓️ Day-wise Attendance Summary")
+TOTAL_CLASSES = 16  # Assume total classes per day = 16
+day_summary = data.groupby(['Date', 'Attendance']).size().unstack(fill_value=0)
+day_summary['Total'] = day_summary.sum(axis=1)
+day_summary['Attendance_%'] = (day_summary.get('Present', 0) / TOTAL_CLASSES) * 100
+day_summary['Attendance_%'] = day_summary['Attendance_%'].round(2)
+st.dataframe(day_summary)
+
+# Optional: Line chart for day-wise attendance trend
+st.line_chart(day_summary['Attendance_%'])
+
 # --- Correlation ---
 st.subheader("📈 Correlation: Attendance vs Marks")
 fig, ax = plt.subplots()
