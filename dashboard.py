@@ -9,7 +9,7 @@ from PIL import Image
 from io import BytesIO
 
 # ---------------- Page config & styling ----------------
-st.set_page_config(page_title="Professional Attendance Dashboard", page_icon="🎓", layout="wide")
+st.set_page_config(page_title=" Attendance Dashboard", page_icon="🎓", layout="wide")
 
 # Simple dark theme CSS
 st.markdown(
@@ -36,9 +36,9 @@ try:
     with col_logo:
         st.image(logo_img, use_column_width=True)
     with col_title:
-        st.title("🎓 Professional Student Attendance Dashboard")
+        st.title("🎓 Student Attendance Dashboard")
 except Exception as e:
-    st.title("🎓 Professional Student Attendance Dashboard")
+    st.title("🎓  Student Attendance Dashboard")
 
 st.markdown("Search a student to view their **subject-wise attendance** (green = Present, red = Absent).")
 
@@ -195,3 +195,4 @@ else:
 # ---------------- Footer ----------------
 st.markdown("---")
 st.caption("Dashboard built for presentation — modern dark theme, subject-wise student view with university logo.")
+
