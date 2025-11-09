@@ -33,7 +33,7 @@ if name:
     if name_cap in data['Name'].unique():
         student_data = data[data['Name'] == name_cap]
         total = len(student_data)
-        present = student_data['Attendance_Binary'].sum()
+        present = student_data['Attendance_Percentage'].sum()
         percent = (present / total) * 100
         avg_marks = student_data['Marks'].mean()
 
@@ -41,6 +41,6 @@ if name:
 
         # Attendance trend visualization for selected student
         st.subheader(f"📈 Attendance Trend for {name_cap}")
-        st.line_chart(student_data.set_index('Date')['Attendance_Binary'])
+        st.line_chart(student_data.set_index('Date')['Attendance_Percentage'])
     else:
         st.error("❌ No record found.")
