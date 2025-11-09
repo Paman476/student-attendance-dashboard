@@ -1,191 +1,88 @@
-# dashboard.py
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from datetime import datetime
-import requests
-from PIL import Image
-from io import BytesIO
 
-# ---------------- Page config & styling ----------------
-st.set_page_config(page_title=" Attendance Dashboard", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="Student Attendance Pattern Analysis", layout="wide")
 
-# Simple dark theme CSS
-st.markdown(
-    """
-    <style>
-    .css-1d391kg { background-color: #0f1720; }  /* body background in some Streamlit versions */
-    .stApp { background: linear-gradient(180deg,#0b1220 0%, #0f1720 100%); color: #E6EEF3; }
-    .block-container { padding: 1.2rem 1.5rem; }
-    h1, h2, h3, .css-1v0mbdj { color: #E6EEF3; }
-    .stMetric { color: #E6EEF3; }
-    .stButton>button { background-color:#ff8c42; color: #0f1720; border: none; }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+st.title("🎓 Student Attendance Pattern Analysis Dashboard")
 
-# ---------------- Logo Section ----------------
-logo_url = "https://media.licdn.com/dms/image/v2/D4D0BAQFBgbK2g1w9kw/company-logo_200_200/company-logo_200_200/0/1693174200475?e=2147483647&v=beta&t=1xcMKKhtsRau_CUs3EUsOpnGXsQe6e5qAfQbJ5GxA6g"
-
-try:
-    response = requests.get(logo_url, timeout=5)
-    logo_img = Image.open(BytesIO(response.content))
-    col_logo, col_title = st.columns([1, 4])
-    with col_logo:
-        st.image(logo_img, use_column_width=True)
-    with col_title:
-        st.title("🎓 Student Attendance Dashboard")
-except:
-    st.title("🎓 Student Attendance Dashboard")
-
-st.markdown("Search a student to view their **attendance percentage**.")
-
-# ---------------- Load and clean data ----------------
+# --- Load Data ---
 @st.cache_data
-def load_data(path='attendance.csv'):
-    df = pd.read_csv(path)
-    df.columns = df.columns.str.strip()
-    df['Attendance'] = df['Attendance'].astype(str).str.strip().str.title()
-    df['Name'] = df['Name'].astype(str).str.strip()
-    df['Subject'] = df['Subject'].astype(str).str.strip()
-    df['Date'] = df['Date'].astype(str).str.strip()
-    df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')
-    df = df.dropna(subset=['Date'])
-    df['Attendance_Binary'] = df['Attendance'].map({'Present': 1, 'Absent': 0})
-    if 'Marks' in df.columns:
-        df['Marks'] = pd.to_numeric(df['Marks'], errors='coerce')
-    else:
-        df['Marks'] = pd.NA
+def load_data():
+    df = pd.read_csv("attendance.csv")
+    df['Attendance_Binary'] = df['Status'].apply(lambda x: 1 if x == 'Present' else 0)
     return df
 
-data = load_data('attendance.csv')
+df = load_data()
 
-# ---------------- Subjects (limit to 5 requested) ----------------
-preferred_subjects = [
-    "Web Technologies",
-    "IT Infrastructure",
-    "Data Mining",
-    "Routing and Switching",
-    "Modeling and Simulations"
-]
-available_subjects = [s for s in preferred_subjects if s in data['Subject'].unique()]
-if not available_subjects:
-    available_subjects = sorted(data['Subject'].unique())
+# --- Sidebar ---
+st.sidebar.header("🔍 Search Student")
+student_list = sorted(df['Student_Name'].unique())
+selected_student = st.sidebar.selectbox("Select a student", ["All Students"] + student_list)
 
-# ---------------- Sidebar Controls ----------------
-st.sidebar.header("Filters & Search")
-student_input = st.sidebar.text_input("Search student name (exact):", "")
-subject_filter = st.sidebar.selectbox("Subject filter (All subjects shown by default):", ["All"] + available_subjects)
-date_min = data['Date'].min()
-date_max = data['Date'].max()
-date_range = st.sidebar.date_input(
-    "Date range:",
-    value=(date_min.date(), date_max.date()),
-    min_value=date_min.date(),
-    max_value=date_max.date()
+st.sidebar.image(
+    "https://media.licdn.com/dms/image/v2/D4D0BAQFBgbK2g1w9kw/company-logo_200_200/company-logo_200_200/0/1693174200475?e=2147483647&v=beta&t=1xcMKKhtsRau_CUs3EUsOpnGXsQe6e5qAfQbJ5GxA6g",
+    width=120,
 )
 
-# ---------------- Dashboard Top KPIs ----------------
-col1, col2, col3, col4 = st.columns(4)
-total_records = len(data)
-unique_students = data['Name'].nunique()
-unique_subjects = data['Subject'].nunique()
-col1.metric("Total Records", total_records)
-col2.metric("Students", unique_students)
-col3.metric("Subjects (in file)", unique_subjects)
-col4.metric("Date Range", f"{date_min.date()} → {date_max.date()}")
-
-st.markdown("---")
-
-# ---------------- Data filtering according to sidebar ----------------
-start_date, end_date = date_range
-start_dt = pd.to_datetime(start_date)
-end_dt = pd.to_datetime(end_date)
-df_filtered = data[(data['Date'] >= start_dt) & (data['Date'] <= end_dt)]
-
-if subject_filter != "All":
-    df_filtered = df_filtered[df_filtered['Subject'] == subject_filter]
-
-# ---------------- If a student is selected ----------------
-if student_input.strip():
-    student_name = student_input.strip()
-    matches = [n for n in df_filtered['Name'].unique() if n.lower() == student_name.lower()]
-    if not matches:
-        st.error("❌ No record found for that student (check exact spelling).")
-    else:
-        student_name_matched = matches[0]
-        sdata = df_filtered[df_filtered['Name'] == student_name_matched].sort_values('Date')
-        if sdata.empty:
-            st.warning("No records for this student in the selected date range / subject filter.")
-        else:
-            # ---------------- Student summary cards ----------------
-            total_classes = len(sdata)
-            present_count = int(sdata['Attendance_Binary'].sum())
-            absent_count = int(total_classes - present_count)
-            attendance_pct = present_count / total_classes * 100
-            avg_marks = sdata['Marks'].mean() if pd.notna(sdata['Marks']).any() else None
-
-            st.header(f"👤 {student_name_matched} — Summary")
-            c1, c2, c3, c4 = st.columns([1,1,1,1])
-            c1.metric("Total Classes", total_classes)
-            c2.metric("Present", present_count)
-            c3.metric("Absent", absent_count)
-            c4.metric("Attendance %", f"{attendance_pct:.2f}%")
-            if avg_marks is not None and not pd.isna(avg_marks):
-                st.write(f"**Average Marks:** {avg_marks:.2f}")
-
-            st.markdown("---")
-
-            # ---------------- Combined Pie Chart for All Subjects ----------------
-            st.subheader("📊 Overall Attendance Percentage by Subject")
-
-            subj_summary = sdata.groupby('Subject').agg(
-                Present=('Attendance_Binary', 'sum'),
-                Total=('Attendance_Binary', 'count')
-            )
-            subj_summary['Attendance %'] = (subj_summary['Present'] / subj_summary['Total'] * 100).round(2)
-
-            # Agar sirf ek subject hai to wo bhi handle hoga
-            labels = subj_summary.index.tolist()
-            sizes = subj_summary['Attendance %'].tolist()
-
-            # Colors: gradient green → red
-            colors = plt.cm.RdYlGn([p/100 for p in sizes])  # green = high %, red = low %
-
-            fig, ax = plt.subplots(figsize=(6,6))
-            wedges, texts, autotexts = ax.pie(
-                sizes,
-                labels=labels,
-                autopct='%1.1f%%',
-                startangle=90,
-                colors=colors,
-                textprops={'color': 'white', 'fontsize': 11}
-            )
-            ax.axis('equal')
-            st.pyplot(fig)
-
-            st.markdown("---")
-
-            # ---------------- Subject-wise Summary Table ----------------
-            st.subheader("📄 Subject-wise Summary")
-            subj_summary_display = subj_summary[['Present', 'Total', 'Attendance %']]
-            st.dataframe(subj_summary_display.sort_values('Attendance %', ascending=False))
-
-            st.markdown("---")
-
-            # ---------------- Download Button ----------------
-            csv_bytes = sdata.to_csv(index=False).encode('utf-8')
-            st.download_button("📥 Download Student CSV", csv_bytes, file_name=f"{student_name_matched}_attendance.csv", mime="text/csv")
-
+# --- Main Dashboard ---
+if selected_student == "All Students":
+    st.subheader("📘 Aggregated Subject Attendance (All Students)")
+    summary = df.groupby('Subject').agg(
+        Present=('Attendance_Binary', 'sum'),
+        Total=('Attendance_Binary', 'count')
+    )
+    summary['Attendance %'] = (summary['Present'] / summary['Total'] * 100).round(2)
+    st.bar_chart(summary['Attendance %'])
 else:
-    # ---------------- No student selected ----------------
-    st.info("Type a student's exact name in the sidebar search box to view their personal attendance dashboard.")
-    st.subheader("📘 Aggregated Subject Attendance (filtered)")
-    agg = df_filtered.groupby('Subject')['Attendance_Binary'].mean() * 100
-    st.bar_chart(agg.sort_values(ascending=False))
+    st.subheader(f"📋 Attendance Report for {selected_student}")
 
-# ---------------- Footer ----------------
-st.markdown("---")
-st.caption("Dashboard built for presentation — modern dark theme, subject-wise student view with university logo.")
+    sdata = df[df['Student_Name'] == selected_student]
+
+    # --- Combined Pie Chart for All Subjects ---
+    st.subheader("📊 Overall Attendance Percentage by Subject")
+
+    subj_summary = sdata.groupby('Subject').agg(
+        Present=('Attendance_Binary', 'sum'),
+        Total=('Attendance_Binary', 'count')
+    )
+    subj_summary['Attendance %'] = (subj_summary['Present'] / subj_summary['Total'] * 100).round(2)
+
+    labels = subj_summary.index.tolist()
+    sizes = subj_summary['Attendance %'].tolist()
+
+    # --- Color coding ---
+    def get_color(p):
+        if p >= 80:
+            return 'green'
+        elif p >= 60:
+            return 'gold'
+        else:
+            return 'red'
+
+    colors = [get_color(p) for p in sizes]
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+    wedges, texts, autotexts = ax.pie(
+        sizes,
+        labels=labels,
+        autopct='%1.1f%%',
+        startangle=90,
+        colors=colors,
+        textprops={'color': 'white', 'fontsize': 11}
+    )
+    ax.axis('equal')
+    st.pyplot(fig)
+
+    # --- Bar Chart Below Pie Chart ---
+    st.subheader("📘 Aggregated Subject Attendance (Filtered)")
+    st.bar_chart(subj_summary['Attendance %'])
+
+    # --- Data Table ---
+    st.subheader("📅 Detailed Attendance Records")
+    st.dataframe(sdata[['Date', 'Subject', 'Status']].reset_index(drop=True))
+
+    # --- Overall Summary ---
+    overall = (sdata['Attendance_Binary'].mean() * 100).round(2)
+    st.success(f"✅ Overall Attendance Percentage: {overall}%")
+
