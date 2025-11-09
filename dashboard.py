@@ -1,63 +1,73 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 # --- Load dataset ---
 data = pd.read_csv('attendance.csv')
 
-# --- Clean columns ---
+# --- Clean column names ---
 data.columns = data.columns.str.strip()
+
+# --- Clean and prepare data ---
 data['Attendance'] = data['Attendance'].str.strip().str.title()
 data['Attendance_Binary'] = data['Attendance'].map({'Present': 1, 'Absent': 0})
-data['Date'] = pd.to_datetime(data['Date'], dayfirst=True)
 
-# --- Page Title ---
-st.title("🎓 Student Attendance Tracker")
-st.write("Search for a student and see their subject-wise attendance chart.")
+# --- Fix invalid dates safely ---
+data['Date'] = pd.to_datetime(data['Date'], dayfirst=True, errors='coerce')
+data = data.dropna(subset=['Date'])
 
-# --- Sidebar: Student Selection ---
-student_name = st.text_input("Enter Student Name:")
+# --- Dashboard Header ---
+st.set_page_config(page_title="Student Attendance Dashboard", layout="wide")
+st.title("🎓 Student Attendance Dashboard")
+st.markdown("""
+This dashboard helps visualize **individual student attendance** across all subjects.  
+You can search for a student below to view their detailed attendance trend.
+""")
 
-if student_name:
-    student_name_cap = student_name.strip().capitalize()
-    if student_name_cap in data['Name'].unique():
-        student_data = data[data['Name'] == student_name_cap].copy()
-        student_data = student_data.sort_values('Date')
+# --- Student Search Input ---
+st.sidebar.header("🔍 Search Student")
+name = st.sidebar.text_input("Enter student name:")
 
-        # --- Attendance Overview ---
-        total_days = len(student_data)
-        present_days = student_data['Attendance_Binary'].sum()
-        attendance_percent = (present_days / total_days) * 100
-        st.subheader(f"{student_name_cap} Attendance Overview")
-        st.metric("Overall Attendance %", f"{attendance_percent:.2f}%")
+if name:
+    name_cap = name.strip().capitalize()
+    if name_cap in data['Name'].unique():
+        student_data = data[data['Name'] == name_cap]
+        total = len(student_data)
+        present = student_data['Attendance_Binary'].sum()
+        percent = (present / total) * 100
+        avg_marks = student_data['Marks'].mean()
 
-        # --- Subject-wise Attendance Table ---
-        st.subheader("📄 Subject-wise Attendance Summary")
-        subject_summary = student_data.groupby('Subject')['Attendance_Binary'].agg(['sum', 'count'])
-        subject_summary['Attendance %'] = (subject_summary['sum'] / subject_summary['count'] * 100).round(2)
-        st.dataframe(subject_summary[['sum', 'count', 'Attendance %']].rename(columns={'sum':'Present', 'count':'Total'}))
+        st.success(f"### ✅ {name_cap}'s Attendance Summary")
+        st.write(f"**Total Classes:** {total}")
+        st.write(f"**Present:** {present}")
+        st.write(f"**Absent:** {total - present}")
+        st.write(f"**Attendance %:** {percent:.2f}%")
+        st.write(f"**Average Marks:** {avg_marks:.2f}")
 
-        # --- Color-coded Attendance Chart by Subject ---
-        st.subheader("📊 Attendance Chart by Subject")
-        subjects = student_data['Subject'].unique()
-        fig, ax = plt.subplots(figsize=(12, 5))
+        # --- Subject-wise Attendance ---
+        st.subheader("📘 Subject-wise Attendance (%)")
+        subject_attendance = student_data.groupby('Subject')['Attendance_Binary'].mean() * 100
+        st.bar_chart(subject_attendance)
 
-        for subj in subjects:
-            subj_data = student_data[student_data['Subject'] == subj]
-            colors = ['green' if x == 'Present' else 'red' for x in subj_data['Attendance']]
-            ax.bar(subj_data['Date'], subj_data['Attendance_Binary'], color=colors, label=subj, alpha=0.7)
-
-        ax.set_ylim(0, 1.5)
-        ax.set_yticks([0, 1])
-        ax.set_yticklabels(['Absent', 'Present'])
+        # --- Daily Attendance Visualization (Colored Chart) ---
+        st.subheader("📅 Daily Attendance Record")
+        fig, ax = plt.subplots(figsize=(10, 4))
+        colors = student_data['Attendance_Binary'].map({1: 'green', 0: 'red'})
+        ax.bar(student_data['Date'], student_data['Attendance_Binary'], color=colors)
+        ax.set_title(f"{name_cap}'s Attendance (Green = Present, Red = Absent)", fontsize=14)
         ax.set_xlabel("Date")
-        ax.set_ylabel("Attendance")
-        ax.set_title(f"{student_name_cap} Subject-wise Attendance")
-        ax.legend(title="Subject")
+        ax.set_ylabel("Attendance (1=Present, 0=Absent)")
+        ax.set_ylim(0, 1.2)
         plt.xticks(rotation=45)
-        plt.tight_layout()
         st.pyplot(fig)
 
     else:
         st.error("❌ No record found for this student.")
+else:
+    st.info("👈 Please enter a student name in the sidebar to view their details.")
+
+# --- Footer ---
+st.markdown("""
+---
+👨‍🏫 *Developed Interactive Attendance Dashboard*
+""")
