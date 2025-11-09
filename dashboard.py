@@ -1,48 +1,53 @@
-import streamlit as st
 import pandas as pd
+import streamlit as st
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load dataset
-data = pd.read_csv('attendance.csv')
-data['Attendance_Binary'] = data['Attendance'].map({'Present': 1, 'Absent': 0})
+# Title
+st.title("📊 Student Attendance Dashboard")
 
-st.title("🎓 Student Attendance Pattern Dashboard")
-st.write("Analyze attendance trends and student performance using data mining insights.")
+# Load data
+df = pd.read_csv("attendance.csv")
 
-# --- Overall Attendance ---
-overall = data['Attendance'].value_counts(normalize=True) * 100
-st.subheader("📊 Overall Attendance Rate")
-st.bar_chart(overall)
+# Show raw data
+st.subheader("Attendance Data")
+st.dataframe(df)
 
-# --- Attendance per Subject ---
-st.subheader("📘 Subject-wise Attendance (%)")
-subject_attendance = data.groupby('Subject')['Attendance_Binary'].mean() * 100
-st.bar_chart(subject_attendance)
+# Summary by student
+st.subheader("📋 Attendance Summary")
+summary = df.groupby(['Name', 'Status']).size().unstack(fill_value=0)
+summary['Total'] = summary.sum(axis=1)
+summary['Attendance %'] = (summary.get('Present', 0) / summary['Total']) * 100
+st.dataframe(summary)
 
-# --- Attendance per Student ---
-st.subheader("🧍‍♂️ Student-wise Attendance (%)")
-student_attendance = data.groupby('Name')['Attendance_Binary'].mean() * 100
-st.bar_chart(student_attendance)
+# Select student
+st.subheader("👩‍🎓 Individual Student Analysis")
+students = df['Name'].unique()
+selected_student = st.selectbox("Select Student:", students)
 
-# --- Correlation ---
-st.subheader("📈 Correlation: Attendance vs Marks")
+student_data = df[df['Name'] == selected_student]
+st.write(f"### {selected_student}'s Attendance Details")
+st.write(student_data)
+
+# Count present/absent
+present_count = (student_data['Status'] == 'Present').sum()
+absent_count = (student_data['Status'] == 'Absent').sum()
+
+st.metric("Total Presents", present_count)
+st.metric("Total Absents", absent_count)
+
+# Pie Chart
 fig, ax = plt.subplots()
-sns.heatmap(data[['Attendance_Binary', 'Marks']].corr(), annot=True, cmap='coolwarm', ax=ax)
+ax.pie(
+    [present_count, absent_count],
+    labels=['Present', 'Absent'],
+    autopct='%1.1f%%',
+    colors=['#4CAF50', '#FF5252']
+)
 st.pyplot(fig)
 
-# --- Individual Student Search ---
-st.subheader("🔍 Check Student Details")
-name = st.text_input("Enter student name:")
-if name:
-    name_cap = name.strip().capitalize()
-    if name_cap in data['Name'].unique():
-        student_data = data[data['Name'] == name_cap]
-        total = len(student_data)
-        present = student_data['Attendance_Binary'].sum()
-        percent = (present / total) * 100
-        avg_marks = student_data['Marks'].mean()
-        st.success(f"**{name_cap}** - Attendance: {percent:.2f}%, Avg Marks: {avg_marks:.2f}")
-        st.bar_chart(student_data['Attendance_Binary'])
-    else:
-        st.error("❌ No record found.")
+# Overall Heatmap
+st.subheader("📅 Overall Attendance Heatmap")
+pivot_table = df.pivot_table(index='Name', columns='Date', values='Status', aggfunc=lambda x: 1 if 'Present' in x.values else 0)
+sns.heatmap(pivot_table, cmap='Greens', cbar=True)
+st.pyplot()
