@@ -1,5 +1,3 @@
-# dashboard.py
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -9,7 +7,7 @@ from PIL import Image
 from io import BytesIO
 
 # ---------------- Page config & styling ----------------
-st.set_page_config(page_title=" Attendance Dashboard", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="Attendance Dashboard", page_icon="🎓", layout="wide")
 
 # Simple dark theme CSS
 st.markdown(
@@ -28,7 +26,6 @@ st.markdown(
 
 # ---------------- Logo Section ----------------
 logo_url = "https://media.licdn.com/dms/image/v2/D4D0BAQFBgbK2g1w9kw/company-logo_200_200/company-logo_200_200/0/1693174200475?e=2147483647&v=beta&t=1xcMKKhtsRau_CUs3EUsOpnGXsQe6e5qAfQbJ5GxA6g"
-
 try:
     response = requests.get(logo_url, timeout=5)
     logo_img = Image.open(BytesIO(response.content))
@@ -113,6 +110,30 @@ if student_input.strip():
         if sdata.empty:
             st.warning("No records for this student in the selected date range / subject filter.")
         else:
+            # ---------------- 📘 Aggregated Subject Attendance (bar chart) ----------------
+            st.subheader("📘 Aggregated Subject Attendance (Filtered)")
+            agg = sdata.groupby('Subject')['Attendance_Binary'].mean() * 100
+            st.bar_chart(agg.sort_values(ascending=False))
+
+            st.markdown("---")
+
+            # ---------------- 🟣 Pie Chart: Attendance by Subject (one circle) ----------------
+            st.subheader("🟣 Subject-wise Attendance Distribution")
+            subject_counts = sdata.groupby('Subject')['Attendance_Binary'].sum()
+            fig2, ax2 = plt.subplots(figsize=(6,6))
+            ax2.pie(
+                subject_counts,
+                labels=subject_counts.index,
+                autopct='%1.1f%%',
+                startangle=90,
+                colors=['#FF5733','#33FF57','#3357FF','#FF33A6','#FFC300'],
+                textprops={'color':'white', 'fontsize':12}
+            )
+            ax2.axis('equal')
+            st.pyplot(fig2)
+
+            st.markdown("---")
+
             # ---------------- Student Summary ----------------
             total_classes = len(sdata)
             present_count = int(sdata['Attendance_Binary'].sum())
@@ -128,29 +149,6 @@ if student_input.strip():
             c4.metric("Attendance %", f"{attendance_pct:.2f}%")
             if avg_marks is not None and not pd.isna(avg_marks):
                 st.write(f"**Average Marks:** {avg_marks:.2f}")
-
-            st.markdown("---")
-
-            # ---------------- Aggregated Subject Attendance (bar chart) ----------------
-            st.subheader("📘 Aggregated Subject Attendance (Filtered)")
-            agg = sdata.groupby('Subject')['Attendance_Binary'].mean() * 100
-            st.bar_chart(agg.sort_values(ascending=False))
-
-            st.markdown("---")
-
-            # ---------------- Combined Pie Chart ----------------
-            st.subheader("🟢🔴 Overall Attendance Ratio (All Subjects Combined)")
-            fig1, ax1 = plt.subplots(figsize=(5,5))
-            ax1.pie(
-                [present_count, absent_count],
-                labels=['Present', 'Absent'],
-                colors=['#00C853', '#E74C3C'],
-                autopct='%1.1f%%',
-                startangle=90,
-                textprops={'color':'white', 'fontsize':12}
-            )
-            ax1.axis('equal')
-            st.pyplot(fig1)
 
             st.markdown("---")
 
