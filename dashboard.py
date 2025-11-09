@@ -40,10 +40,9 @@ st.dataframe(summary)
 
 # --- Day-wise Attendance Summary ---
 st.subheader("🗓️ Day-wise Attendance Summary")
-TOTAL_CLASSES = 16  # Total classes per day
 day_summary = data.groupby(['Date', 'Attendance']).size().unstack(fill_value=0)
-day_summary['Total'] = day_summary.sum(axis=1)
-day_summary['Attendance_%'] = (day_summary.get('Present', 0) / TOTAL_CLASSES) * 100
+day_summary['Total'] = day_summary.sum(axis=1)  # Dynamic total per day
+day_summary['Attendance_%'] = (day_summary.get('Present', 0) / day_summary['Total']) * 100
 day_summary['Attendance_%'] = day_summary['Attendance_%'].round(2)
 st.dataframe(day_summary)
 
