@@ -3,8 +3,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load dataset
+# --- Load dataset ---
 data = pd.read_csv('attendance.csv')
+
+# --- Clean column names to avoid KeyError ---
+data.columns = data.columns.str.strip()  # Remove any extra spaces
 
 # --- Clean and prepare data ---
 data['Attendance'] = data['Attendance'].str.strip().str.title()
@@ -34,6 +37,18 @@ summary = data.groupby(['Name', 'Attendance']).size().unstack(fill_value=0)
 summary['Total'] = summary.sum(axis=1)
 summary['Attendance %'] = (summary.get('Present', 0) / summary['Total']) * 100
 st.dataframe(summary)
+
+# --- Day-wise Attendance Summary ---
+st.subheader("🗓️ Day-wise Attendance Summary")
+TOTAL_CLASSES = 16  # Total classes per day
+day_summary = data.groupby(['Date', 'Attendance']).size().unstack(fill_value=0)
+day_summary['Total'] = day_summary.sum(axis=1)
+day_summary['Attendance_%'] = (day_summary.get('Present', 0) / TOTAL_CLASSES) * 100
+day_summary['Attendance_%'] = day_summary['Attendance_%'].round(2)
+st.dataframe(day_summary)
+
+# Optional: Line chart for day-wise attendance trend
+st.line_chart(day_summary['Attendance_%'])
 
 # --- Correlation ---
 st.subheader("📈 Correlation: Attendance vs Marks")
