@@ -8,54 +8,49 @@ from io import BytesIO
 import time
 
 # ---------------- Page config & styling ----------------
-st.set_page_config(page_title="Animated Attendance Dashboard", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="Attendance Dashboard", page_icon="🎓", layout="wide")
 
-# ---------------- CSS Animations & Theme ----------------
-st.markdown("""
-<style>
-/* Background gradient and smooth transitions */
-.stApp {
-    background: linear-gradient(180deg,#0b1220 0%, #0f1720 100%);
-    color: #E6EEF3;
-    transition: all 0.5s ease-in-out;
-}
-
-/* Glow for headings */
-h1, h2, h3 {
-    color: #E6EEF3;
-    text-shadow: 0 0 15px rgba(255, 140, 66, 0.5);
-    animation: fadeInDown 1.2s ease;
-}
-
-/* Buttons */
-.stButton>button {
-    background-color:#ff8c42;
-    color: #0f1720;
-    border: none;
-    border-radius:10px;
-    transition: all 0.3s ease;
-}
-.stButton>button:hover {
-    background-color:#ffa45c;
-    transform: scale(1.05);
-}
-
-/* Charts Fade-in */
-[data-testid="stHorizontalBlock"] {
-    animation: fadeIn 1.3s ease;
-}
-
-/* Custom animations */
-@keyframes fadeIn {
-    from {opacity: 0; transform: translateY(10px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-@keyframes fadeInDown {
-    from {opacity: 0; transform: translateY(-10px);}
-    to {opacity: 1; transform: translateY(0);}
-}
-</style>
-""", unsafe_allow_html=True)
+# Add animated smooth dark theme CSS
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background: linear-gradient(180deg, #0b1220 0%, #0f1720 100%);
+        color: #E6EEF3;
+        transition: background 0.8s ease, color 0.8s ease;
+    }
+    h1, h2, h3 {
+        color: #E6EEF3;
+        text-shadow: 0 0 15px rgba(255, 140, 66, 0.5);
+        animation: fadeInDown 1s ease;
+    }
+    .block-container { 
+        padding: 1.2rem 1.5rem;
+        animation: fadeIn 1.2s ease;
+    }
+    .stButton>button {
+        background-color:#ff8c42; 
+        color:#0f1720; 
+        border:none; 
+        border-radius:10px;
+        transition:0.3s;
+    }
+    .stButton>button:hover {
+        background-color:#ffa45c; 
+        transform:scale(1.05);
+    }
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeInDown {
+        from {opacity: 0; transform: translateY(-10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # ---------------- Logo Section ----------------
 logo_url = "https://media.licdn.com/dms/image/v2/D4D0BAQFBgbK2g1w9kw/company-logo_200_200/company-logo_200_200/0/1693174200475?e=2147483647&v=beta&t=1xcMKKhtsRau_CUs3EUsOpnGXsQe6e5qAfQbJ5GxA6g"
@@ -70,9 +65,9 @@ try:
 except:
     st.title("🎓 Student Attendance Dashboard")
 
-st.markdown("Search a student to view their **attendance percentage** month-wise with animated insights 💫")
+st.markdown("Search a student to view their **attendance percentage**.")
 
-# ---------------- Load Data ----------------
+# ---------------- Load and clean data ----------------
 @st.cache_data
 def load_data(path='attendance.csv'):
     df = pd.read_csv(path)
@@ -80,102 +75,145 @@ def load_data(path='attendance.csv'):
     df['Attendance'] = df['Attendance'].astype(str).str.strip().str.title()
     df['Name'] = df['Name'].astype(str).str.strip()
     df['Subject'] = df['Subject'].astype(str).str.strip()
-    df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+    df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')
     df = df.dropna(subset=['Date'])
     df['Attendance_Binary'] = df['Attendance'].map({'Present': 1, 'Absent': 0})
+    if 'Marks' in df.columns:
+        df['Marks'] = pd.to_numeric(df['Marks'], errors='coerce')
+    else:
+        df['Marks'] = pd.NA
     return df
 
 data = load_data('attendance.csv')
 
-# ---------------- Sidebar ----------------
-st.sidebar.header("🎯 Filters & Search")
+# ---------------- Subjects ----------------
+preferred_subjects = [
+    "Web Technologies",
+    "IT Infrastructure",
+    "Data Mining",
+    "Routing and Switching",
+    "Modeling and Simulations"
+]
+available_subjects = [s for s in preferred_subjects if s in data['Subject'].unique()]
+if not available_subjects:
+    available_subjects = sorted(data['Subject'].unique())
+
+# ---------------- Sidebar Controls ----------------
+st.sidebar.header("Filters & Search")
 student_input = st.sidebar.text_input("Search student name (exact):", "")
-month_select = st.sidebar.selectbox(
-    "Select Month:",
-    sorted(data['Date'].dt.strftime('%B %Y').unique())
+subject_filter = st.sidebar.selectbox("Subject filter (All subjects shown by default):", ["All"] + available_subjects)
+date_min = data['Date'].min()
+date_max = data['Date'].max()
+date_range = st.sidebar.date_input(
+    "Date range:",
+    value=(date_min.date(), date_max.date()),
+    min_value=date_min.date(),
+    max_value=date_max.date()
 )
 
-# Month filter
-month_dt = pd.to_datetime(month_select)
-df_filtered = data[
-    (data['Date'].dt.month == month_dt.month) & 
-    (data['Date'].dt.year == month_dt.year)
-]
+# Animated date selection feel (fake delay for smooth refresh)
+with st.spinner("🎨 Applying date filter..."):
+    time.sleep(0.4)
 
 # ---------------- Dashboard Top KPIs ----------------
 col1, col2, col3, col4 = st.columns(4)
-col1.metric("Total Records", len(df_filtered))
-col2.metric("Students", df_filtered['Name'].nunique())
-col3.metric("Subjects", df_filtered['Subject'].nunique())
-col4.metric("Selected Month", month_select)
+col1.metric("Total Records", len(data))
+col2.metric("Students", data['Name'].nunique())
+col3.metric("Subjects (in file)", data['Subject'].nunique())
+col4.metric("Date Range", f"{date_min.date()} → {date_max.date()}")
+
 st.markdown("---")
 
-# ---------------- Student Filter Logic ----------------
+# ---------------- Data filtering ----------------
+start_date, end_date = date_range
+df_filtered = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
+if subject_filter != "All":
+    df_filtered = df_filtered[df_filtered['Subject'] == subject_filter]
+
+# ---------------- If a student is selected ----------------
 if student_input.strip():
     student_name = student_input.strip()
     matches = [n for n in df_filtered['Name'].unique() if n.lower() == student_name.lower()]
     if not matches:
-        st.error("❌ No record found for that student in this month.")
+        st.error("❌ No record found for that student (check exact spelling).")
     else:
         student_name_matched = matches[0]
-        sdata = df_filtered[df_filtered['Name'] == student_name_matched]
+        sdata = df_filtered[df_filtered['Name'] == student_name_matched].sort_values('Date')
         if sdata.empty:
-            st.warning("No attendance for this student in selected month.")
+            st.warning("No records for this student in the selected date range / subject filter.")
         else:
-            time.sleep(0.4)  # small delay for animation feel
+            st.markdown("### ✨ Loading Student Data...")
+            time.sleep(0.6)
+            st.markdown("")
 
-            # 📘 Bar Chart
+            # ---------------- 📘 Aggregated Subject Attendance (bar chart) ----------------
             st.subheader("📘 Aggregated Subject Attendance (Filtered)")
             agg = sdata.groupby('Subject')['Attendance_Binary'].mean() * 100
             st.bar_chart(agg.sort_values(ascending=False))
+
             st.markdown("---")
 
-            # 🟢🔴 Animated Pie Chart
-            st.subheader("🟢🔴 Overall Attendance Ratio (All Subjects Combined)")
-            present = int(sdata['Attendance_Binary'].sum())
-            absent = len(sdata) - present
-            fig, ax = plt.subplots(figsize=(5,5))
-            wedges, texts, autotexts = ax.pie(
-                [present, absent],
-                labels=["Present", "Absent"],
-                colors=["#33FF57", "#FF3333"],
+            # ---------------- 🟣 Pie Chart: Attendance by Subject (one circle) ----------------
+            st.subheader("🟣 Subject-wise Attendance Distribution")
+            subject_counts = sdata.groupby('Subject')['Attendance_Binary'].sum()
+            fig2, ax2 = plt.subplots(figsize=(6,6))
+            ax2.pie(
+                subject_counts,
+                labels=subject_counts.index,
                 autopct='%1.1f%%',
-                startangle=time.time() * 20 % 360,  # rotation animation
+                startangle=time.time() * 30 % 360,  # small spin each time
+                colors=['#FF5733','#33FF57','#3357FF','#FF33A6','#FFC300'],
                 textprops={'color':'white', 'fontsize':12}
             )
-            for w in wedges:
-                w.set_edgecolor("white")
-                w.set_linewidth(1.5)
-            ax.axis('equal')
-            st.pyplot(fig)
+            ax2.axis('equal')
+            st.pyplot(fig2)
 
             st.markdown("---")
 
-            # 👤 Summary
-            st.header(f"👤 {student_name_matched} — Summary ({month_select})")
+            # ---------------- Student Summary ----------------
             total_classes = len(sdata)
-            attendance_pct = (sdata['Attendance_Binary'].mean() * 100).round(2)
-            colA, colB, colC = st.columns(3)
-            colA.metric("Total Classes", total_classes)
-            colB.metric("Present", present)
-            colC.metric("Attendance %", f"{attendance_pct:.2f}%")
+            present_count = int(sdata['Attendance_Binary'].sum())
+            absent_count = int(total_classes - present_count)
+            attendance_pct = present_count / total_classes * 100
+            avg_marks = sdata['Marks'].mean() if pd.notna(sdata['Marks']).any() else None
+
+            st.header(f"👤 {student_name_matched} — Summary")
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Total Classes", total_classes)
+            c2.metric("Present", present_count)
+            c3.metric("Absent", absent_count)
+            c4.metric("Attendance %", f"{attendance_pct:.2f}%")
+            if avg_marks is not None and not pd.isna(avg_marks):
+                st.write(f"**Average Marks:** {avg_marks:.2f}")
 
             st.markdown("---")
 
-            # 📄 Table
+            # ---------------- Subject-wise Summary Table ----------------
             st.subheader("📄 Subject-wise Summary")
-            summary = sdata.groupby('Subject').agg(
+            subj_summary = sdata.groupby('Subject').agg(
                 Present=('Attendance_Binary', 'sum'),
                 Total=('Attendance_Binary', 'count')
             )
-            summary['Attendance %'] = (summary['Present']/summary['Total']*100).round(2)
-            st.dataframe(summary.sort_values('Attendance %', ascending=False))
+            subj_summary['Attendance %'] = (subj_summary['Present'] / subj_summary['Total'] * 100).round(2)
+            st.dataframe(subj_summary.sort_values('Attendance %', ascending=False))
+
+            st.markdown("---")
+
+            # ---------------- Download Button ----------------
+            csv_bytes = sdata.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                "📥 Download Student CSV",
+                csv_bytes,
+                file_name=f"{student_name_matched}_attendance.csv",
+                mime="text/csv"
+            )
+
 else:
-    st.info("Type a student's exact name in sidebar to view month-wise animated analysis.")
-    st.subheader("📘 Aggregated Subject Attendance (All Students)")
+    st.info("Type a student's exact name in the sidebar search box to view their personal attendance dashboard.")
+    st.subheader("📘 Aggregated Subject Attendance (Filtered)")
     agg = df_filtered.groupby('Subject')['Attendance_Binary'].mean() * 100
     st.bar_chart(agg.sort_values(ascending=False))
 
 # ---------------- Footer ----------------
 st.markdown("---")
-st.caption("✨ Animated Dashboard | Built for Presentation — smooth transitions, glowing metrics, and modern charts.")
+st.caption("✨ Smooth Animated Dashboard | Same features, modern transitions, and animated refresh ✨")
