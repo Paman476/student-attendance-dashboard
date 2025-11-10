@@ -9,13 +9,17 @@ from io import BytesIO
 # ---------------- Page config & styling ----------------
 st.set_page_config(page_title="Attendance Dashboard", page_icon="🎓", layout="wide")
 
-# Simple dark theme CSS
+# Dark theme with fade-in animation
 st.markdown(
     """
     <style>
     .css-1d391kg { background-color: #0f1720; }
     .stApp { background: linear-gradient(180deg,#0b1220 0%, #0f1720 100%); color: #E6EEF3; }
-    .block-container { padding: 1.2rem 1.5rem; }
+    .block-container { padding: 1.2rem 1.5rem; animation: fadeIn 1s ease-in-out; }
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
     h1, h2, h3, .css-1v0mbdj { color: #E6EEF3; }
     .stMetric { color: #E6EEF3; }
     .stButton>button { background-color:#ff8c42; color: #0f1720; border: none; }
@@ -73,60 +77,66 @@ if not available_subjects:
 # ---------------- Sidebar Controls ----------------
 st.sidebar.header("Filters & Search")
 student_input = st.sidebar.text_input("Search student name (exact):", "")
-subject_filter = st.sidebar.selectbox("Subject filter (All subjects shown by default):", ["All"] + available_subjects)
+subject_filter = st.sidebar.selectbox("Subject filter:", ["All"] + available_subjects)
+
+# Properly handle full dynamic date range
 date_min = data['Date'].min()
 date_max = data['Date'].max()
 date_range = st.sidebar.date_input(
-    "Date range:",
+    "Select Date Range:",
     value=(date_min.date(), date_max.date()),
     min_value=date_min.date(),
     max_value=date_max.date()
 )
 
-# ---------------- Dashboard Top KPIs ----------------
+# ---------------- Dashboard KPIs ----------------
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Total Records", len(data))
 col2.metric("Students", data['Name'].nunique())
-col3.metric("Subjects (in file)", data['Subject'].nunique())
+col3.metric("Subjects", data['Subject'].nunique())
 col4.metric("Date Range", f"{date_min.date()} → {date_max.date()}")
 
 st.markdown("---")
 
-# ---------------- Data filtering ----------------
+# ---------------- Filter data ----------------
 start_date, end_date = date_range
-df_filtered = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
+df_filtered = data[
+    (data['Date'] >= pd.to_datetime(start_date)) &
+    (data['Date'] <= pd.to_datetime(end_date))
+]
 if subject_filter != "All":
     df_filtered = df_filtered[df_filtered['Subject'] == subject_filter]
 
-# ---------------- If a student is selected ----------------
+# ---------------- Student Search ----------------
 if student_input.strip():
     student_name = student_input.strip()
     matches = [n for n in df_filtered['Name'].unique() if n.lower() == student_name.lower()]
     if not matches:
-        st.error("❌ No record found for that student (check exact spelling).")
+        st.error("❌ No record found for that student.")
     else:
         student_name_matched = matches[0]
         sdata = df_filtered[df_filtered['Name'] == student_name_matched].sort_values('Date')
+
         if sdata.empty:
-            st.warning("No records for this student in the selected date range / subject filter.")
+            st.warning("No records found in this date range or subject filter.")
         else:
-            # ---------------- 📘 Aggregated Subject Attendance (bar chart) ----------------
+            # Bar chart first
             st.subheader("📘 Aggregated Subject Attendance (Filtered)")
             agg = sdata.groupby('Subject')['Attendance_Binary'].mean() * 100
             st.bar_chart(agg.sort_values(ascending=False))
 
             st.markdown("---")
 
-            # ---------------- 🟣 Pie Chart: Attendance by Subject (one circle) ----------------
-            st.subheader("🟣 Subject-wise Attendance Distribution")
-            subject_counts = sdata.groupby('Subject')['Attendance_Binary'].sum()
+            # Single pie chart for all 5 subjects combined
+            st.subheader("🟣 Subject-wise Attendance Distribution (Single Chart)")
+            subject_counts = sdata.groupby('Subject')['Attendance_Binary'].mean() * 100
             fig2, ax2 = plt.subplots(figsize=(6,6))
             ax2.pie(
                 subject_counts,
                 labels=subject_counts.index,
                 autopct='%1.1f%%',
                 startangle=90,
-                colors=['#FF5733','#33FF57','#3357FF','#FF33A6','#FFC300'],
+                colors=['#00C853','#FF8C00','#1976D2','#9C27B0','#E74C3C'],
                 textprops={'color':'white', 'fontsize':12}
             )
             ax2.axis('equal')
@@ -134,10 +144,10 @@ if student_input.strip():
 
             st.markdown("---")
 
-            # ---------------- Student Summary ----------------
+            # Summary stats
             total_classes = len(sdata)
             present_count = int(sdata['Attendance_Binary'].sum())
-            absent_count = int(total_classes - present_count)
+            absent_count = total_classes - present_count
             attendance_pct = present_count / total_classes * 100
             avg_marks = sdata['Marks'].mean() if pd.notna(sdata['Marks']).any() else None
 
@@ -147,13 +157,13 @@ if student_input.strip():
             c2.metric("Present", present_count)
             c3.metric("Absent", absent_count)
             c4.metric("Attendance %", f"{attendance_pct:.2f}%")
-            if avg_marks is not None and not pd.isna(avg_marks):
+            if avg_marks is not None:
                 st.write(f"**Average Marks:** {avg_marks:.2f}")
 
             st.markdown("---")
 
-            # ---------------- Subject-wise Summary Table ----------------
-            st.subheader("📄 Subject-wise Summary")
+            # Subject-wise summary table
+            st.subheader("📄 Subject-wise Summary Table")
             subj_summary = sdata.groupby('Subject').agg(
                 Present=('Attendance_Binary', 'sum'),
                 Total=('Attendance_Binary', 'count')
@@ -163,21 +173,17 @@ if student_input.strip():
 
             st.markdown("---")
 
-            # ---------------- Download Button ----------------
+            # Download
             csv_bytes = sdata.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                "📥 Download Student CSV",
-                csv_bytes,
-                file_name=f"{student_name_matched}_attendance.csv",
-                mime="text/csv"
-            )
+            st.download_button("📥 Download Student CSV", csv_bytes,
+                               file_name=f"{student_name_matched}_attendance.csv", mime="text/csv")
 
 else:
-    st.info("Type a student's exact name in the sidebar search box to view their personal attendance dashboard.")
+    st.info("Search a student to view personalized dashboard.")
     st.subheader("📘 Aggregated Subject Attendance (Filtered)")
     agg = df_filtered.groupby('Subject')['Attendance_Binary'].mean() * 100
     st.bar_chart(agg.sort_values(ascending=False))
 
 # ---------------- Footer ----------------
 st.markdown("---")
-st.caption("Dashboard built for presentation — modern dark theme, subject-wise student view with university logo.")
+st.caption("Built for presentation — dark theme, smooth fade animation, subject-wise insights with university logo.")
