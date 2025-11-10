@@ -5,6 +5,7 @@ from datetime import datetime
 import requests
 from PIL import Image
 from io import BytesIO
+from streamlit_lottie import st_lottie  # For Lottie animation
 
 # ---------------- Page config & styling ----------------
 st.set_page_config(page_title="Attendance Dashboard", page_icon="🎓", layout="wide")
@@ -13,7 +14,6 @@ st.set_page_config(page_title="Attendance Dashboard", page_icon="🎓", layout="
 st.markdown(
     """
     <style>
-    /* Page fade-in animation */
     @keyframes fadeIn {
         from {opacity: 0; transform: translateY(10px);}
         to {opacity: 1; transform: translateY(0);}
@@ -30,7 +30,6 @@ st.markdown(
         animation: fadeIn 1s ease-in-out;
     }
 
-    /* KPI metric cards styling */
     [data-testid="stMetric"] {
         border-radius: 18px;
         padding: 16px;
@@ -42,7 +41,6 @@ st.markdown(
         animation: fadeIn 1s ease-in-out;
     }
 
-    /* Gradient backgrounds for each metric box */
     div[data-testid="stMetric"]:nth-child(1) {
         background: linear-gradient(135deg, #ff7b00, #ffb347);
         box-shadow: 0 0 20px rgba(255,140,0,0.25);
@@ -60,13 +58,11 @@ st.markdown(
         box-shadow: 0 0 20px rgba(0,120,255,0.25);
     }
 
-    /* Hover glow */
     [data-testid="stMetric"]:hover {
         transform: scale(1.06);
         box-shadow: 0 0 35px rgba(255,255,255,0.25);
     }
 
-    /* Button styling */
     .stButton>button {
         background-color:#ff8c42;
         color:#0f1720;
@@ -80,7 +76,6 @@ st.markdown(
         transform: scale(1.05);
     }
 
-    /* Table hover */
     .stDataFrame tbody tr:hover {
         background-color: rgba(255,255,255,0.05) !important;
         transition: all 0.2s ease-in-out;
@@ -90,7 +85,19 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# ---------------- Logo Section ----------------
+# ---------------- Lottie animation ----------------
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+lottie_url = "https://lottie.host/f5bb03e5-1a48-4f0e-a03a-839423f05e72/8WBsciw1bL.json"
+lottie_json = load_lottieurl(lottie_url)
+
+st_lottie(lottie_json, speed=1, reverse=False, loop=True, quality="high", height=180, key="dashboard_anim")
+
+# ---------------- Logo and Title ----------------
 logo_url = "https://media.licdn.com/dms/image/v2/D4D0BAQFBgbK2g1w9kw/company-logo_200_200/company-logo_200_200/0/1693174200475?e=2147483647&v=beta&t=1xcMKKhtsRau_CUs3EUsOpnGXsQe6e5qAfQbJ5GxA6g"
 try:
     response = requests.get(logo_url, timeout=5)
@@ -183,7 +190,7 @@ if student_input.strip():
 
             st.markdown("---")
 
-            # ---------------- 🟣 Pie Chart: Attendance by Subject (one circle) ----------------
+            # ---------------- 🟣 Pie Chart ----------------
             st.subheader("🟣 Subject-wise Attendance Distribution")
             subject_counts = sdata.groupby('Subject')['Attendance_Binary'].sum()
             fig2, ax2 = plt.subplots(figsize=(6,6))
@@ -246,4 +253,4 @@ else:
 
 # ---------------- Footer ----------------
 st.markdown("---")
-st.caption("Dashboard built for presentation — modern dark theme with animated KPI cards ✨")
+st.caption("Dashboard built for presentation — modern dark theme, animated cards, and glowing visuals ✨")
