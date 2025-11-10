@@ -247,3 +247,4 @@ else:
 # ---------------- Footer ----------------
 st.markdown("---")
 st.caption("Dashboard built for presentation — modern dark theme with animated KPI cards ✨")
+
