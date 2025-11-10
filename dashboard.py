@@ -5,48 +5,20 @@ from datetime import datetime
 import requests
 from PIL import Image
 from io import BytesIO
-import time
 
 # ---------------- Page config & styling ----------------
 st.set_page_config(page_title="Attendance Dashboard", page_icon="🎓", layout="wide")
 
-# Add animated smooth dark theme CSS
+# Simple dark theme CSS
 st.markdown(
     """
     <style>
-    .stApp {
-        background: linear-gradient(180deg, #0b1220 0%, #0f1720 100%);
-        color: #E6EEF3;
-        transition: background 0.8s ease, color 0.8s ease;
-    }
-    h1, h2, h3 {
-        color: #E6EEF3;
-        text-shadow: 0 0 15px rgba(255, 140, 66, 0.5);
-        animation: fadeInDown 1s ease;
-    }
-    .block-container { 
-        padding: 1.2rem 1.5rem;
-        animation: fadeIn 1.2s ease;
-    }
-    .stButton>button {
-        background-color:#ff8c42; 
-        color:#0f1720; 
-        border:none; 
-        border-radius:10px;
-        transition:0.3s;
-    }
-    .stButton>button:hover {
-        background-color:#ffa45c; 
-        transform:scale(1.05);
-    }
-    @keyframes fadeIn {
-        from {opacity: 0; transform: translateY(10px);}
-        to {opacity: 1; transform: translateY(0);}
-    }
-    @keyframes fadeInDown {
-        from {opacity: 0; transform: translateY(-10px);}
-        to {opacity: 1; transform: translateY(0);}
-    }
+    .css-1d391kg { background-color: #0f1720; }
+    .stApp { background: linear-gradient(180deg,#0b1220 0%, #0f1720 100%); color: #E6EEF3; }
+    .block-container { padding: 1.2rem 1.5rem; }
+    h1, h2, h3, .css-1v0mbdj { color: #E6EEF3; }
+    .stMetric { color: #E6EEF3; }
+    .stButton>button { background-color:#ff8c42; color: #0f1720; border: none; }
     </style>
     """,
     unsafe_allow_html=True
@@ -111,10 +83,6 @@ date_range = st.sidebar.date_input(
     max_value=date_max.date()
 )
 
-# Animated date selection feel (fake delay for smooth refresh)
-with st.spinner("🎨 Applying date filter..."):
-    time.sleep(0.4)
-
 # ---------------- Dashboard Top KPIs ----------------
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Total Records", len(data))
@@ -142,10 +110,6 @@ if student_input.strip():
         if sdata.empty:
             st.warning("No records for this student in the selected date range / subject filter.")
         else:
-            st.markdown("### ✨ Loading Student Data...")
-            time.sleep(0.6)
-            st.markdown("")
-
             # ---------------- 📘 Aggregated Subject Attendance (bar chart) ----------------
             st.subheader("📘 Aggregated Subject Attendance (Filtered)")
             agg = sdata.groupby('Subject')['Attendance_Binary'].mean() * 100
@@ -161,7 +125,7 @@ if student_input.strip():
                 subject_counts,
                 labels=subject_counts.index,
                 autopct='%1.1f%%',
-                startangle=time.time() * 30 % 360,  # small spin each time
+                startangle=90,
                 colors=['#FF5733','#33FF57','#3357FF','#FF33A6','#FFC300'],
                 textprops={'color':'white', 'fontsize':12}
             )
@@ -216,4 +180,4 @@ else:
 
 # ---------------- Footer ----------------
 st.markdown("---")
-st.caption("✨ Smooth Animated Dashboard | Same features, modern transitions, and animated refresh ✨")
+st.caption("Dashboard built for presentation — modern dark theme, subject-wise student view with university logo.")
