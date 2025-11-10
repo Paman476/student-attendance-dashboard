@@ -9,16 +9,58 @@ from io import BytesIO
 # ---------------- Page config & styling ----------------
 st.set_page_config(page_title="Attendance Dashboard", page_icon="🎓", layout="wide")
 
-# Simple dark theme CSS
+# ---------------- Modern Animated CSS ----------------
 st.markdown(
     """
     <style>
-    .css-1d391kg { background-color: #0f1720; }
-    .stApp { background: linear-gradient(180deg,#0b1220 0%, #0f1720 100%); color: #E6EEF3; }
-    .block-container { padding: 1.2rem 1.5rem; }
-    h1, h2, h3, .css-1v0mbdj { color: #E6EEF3; }
-    .stMetric { color: #E6EEF3; }
-    .stButton>button { background-color:#ff8c42; color: #0f1720; border: none; }
+    /* Smooth fade-in animation for page */
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+    .stApp {
+        background: linear-gradient(180deg,#0b1220 0%, #0f1720 100%);
+        color: #E6EEF3;
+        animation: fadeIn 0.8s ease-in;
+    }
+    h1, h2, h3 {
+        color: #E6EEF3;
+        animation: fadeIn 1s ease-in-out;
+    }
+    /* Logo fade-in */
+    img {
+        animation: fadeIn 1.2s ease-in;
+    }
+    /* Button hover animation */
+    .stButton>button {
+        background-color:#ff8c42;
+        color:#0f1720;
+        border:none;
+        border-radius:12px;
+        transition: all 0.3s ease-in-out;
+    }
+    .stButton>button:hover {
+        background-color:#ffa75c;
+        box-shadow: 0 0 15px #ff8c42aa;
+        transform: scale(1.05);
+    }
+    /* Metric cards subtle glow */
+    [data-testid="stMetric"] {
+        background: rgba(255,255,255,0.05);
+        border-radius:12px;
+        padding:10px;
+        text-align:center;
+        transition: all 0.3s ease;
+    }
+    [data-testid="stMetric"]:hover {
+        box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        transform: scale(1.02);
+    }
+    /* Table hover effect */
+    .stDataFrame tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        transition: all 0.2s ease-in-out;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -33,7 +75,7 @@ try:
     with col_logo:
         st.image(logo_img, use_column_width=True)
     with col_title:
-        st.title("🎓 Student Attendance Dashboard")
+        st.markdown("<h1 style='animation: fadeIn 1.5s ease;'>🎓 Student Attendance Dashboard</h1>", unsafe_allow_html=True)
 except:
     st.title("🎓 Student Attendance Dashboard")
 
@@ -121,14 +163,16 @@ if student_input.strip():
             st.subheader("🟣 Subject-wise Attendance Distribution")
             subject_counts = sdata.groupby('Subject')['Attendance_Binary'].sum()
             fig2, ax2 = plt.subplots(figsize=(6,6))
-            ax2.pie(
+            wedges, texts, autotexts = ax2.pie(
                 subject_counts,
                 labels=subject_counts.index,
                 autopct='%1.1f%%',
                 startangle=90,
-                colors=['#FF5733','#33FF57','#3357FF','#FF33A6','#FFC300'],
+                colors=['#00C49F', '#FF8042', '#0088FE', '#FFBB28', '#FF6384'],
                 textprops={'color':'white', 'fontsize':12}
             )
+            for autotext in autotexts:
+                autotext.set_color('black')
             ax2.axis('equal')
             st.pyplot(fig2)
 
@@ -180,4 +224,4 @@ else:
 
 # ---------------- Footer ----------------
 st.markdown("---")
-st.caption("Dashboard built for presentation — modern dark theme, subject-wise student view with university logo.")
+st.caption("✨ Animated Dark Dashboard — subject-wise analytics with smooth transitions.")
